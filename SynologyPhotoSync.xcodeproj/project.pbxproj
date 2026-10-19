@@ -1,0 +1,480 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		444444444444444400000064 /* RemoteMediaInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000064 /* RemoteMediaInventory.swift */; };
+		444444444444444400000065 /* PhotoTransferPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000065 /* PhotoTransferPlan.swift */; };
+		444444444444444400000066 /* SynologyPhotoSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000066 /* SynologyPhotoSyncApp.swift */; };
+		444444444444444400000067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000067 /* AppDelegate.swift */; };
+		444444444444444400000068 /* SyncModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000068 /* SyncModels.swift */; };
+		444444444444444400000069 /* SyncConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000069 /* SyncConfig.swift */; };
+		44444444444444440000006A /* SynologyAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006A /* SynologyAPIModels.swift */; };
+		44444444444444440000006B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006B /* KeychainHelper.swift */; };
+		44444444444444440000006C /* SyncDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006C /* SyncDatabase.swift */; };
+		44444444444444440000006D /* StreamingMultipartUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006D /* StreamingMultipartUploader.swift */; };
+		44444444444444440000006E /* SynologyAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006E /* SynologyAPIClient.swift */; };
+		44444444444444440000006F /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006F /* SyncState.swift */; };
+		444444444444444400000070 /* SyncEngineActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000070 /* SyncEngineActor.swift */; };
+		444444444444444400000071 /* PhotoLibraryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000071 /* PhotoLibraryMonitor.swift */; };
+		444444444444444400000072 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000072 /* AppLogger.swift */; };
+		444444444444444400000073 /* FilenameSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000073 /* FilenameSanitizer.swift */; };
+		444444444444444400000074 /* MenuBarPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000074 /* MenuBarPopupView.swift */; };
+		444444444444444400000075 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000075 /* SettingsView.swift */; };
+		444444444444444400000076 /* SettingsWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000076 /* SettingsWindowManager.swift */; };
+		444444444444444400000077 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000077 /* StatusBadgeView.swift */; };
+		444444444444444400000078 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000078 /* CircularProgressView.swift */; };
+		444444444444444400000079 /* LiquidGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000079 /* LiquidGlass.swift */; };
+		55555555555555550000007C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000007C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		111111111111111100000008 /* SynologyPhotoSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynologyPhotoSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		333333333333333300000064 /* RemoteMediaInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteMediaInventory.swift"; sourceTree = "<group>"; };
+		333333333333333300000065 /* PhotoTransferPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoTransferPlan.swift"; sourceTree = "<group>"; };
+		333333333333333300000066 /* SynologyPhotoSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyPhotoSyncApp.swift"; sourceTree = "<group>"; };
+		333333333333333300000067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate.swift"; sourceTree = "<group>"; };
+		333333333333333300000068 /* SyncModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncModels.swift"; sourceTree = "<group>"; };
+		333333333333333300000069 /* SyncConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncConfig.swift"; sourceTree = "<group>"; };
+		33333333333333330000006A /* SynologyAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIModels.swift"; sourceTree = "<group>"; };
+		33333333333333330000006B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainHelper.swift"; sourceTree = "<group>"; };
+		33333333333333330000006C /* SyncDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncDatabase.swift"; sourceTree = "<group>"; };
+		33333333333333330000006D /* StreamingMultipartUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreamingMultipartUploader.swift"; sourceTree = "<group>"; };
+		33333333333333330000006E /* SynologyAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIClient.swift"; sourceTree = "<group>"; };
+		33333333333333330000006F /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncState.swift"; sourceTree = "<group>"; };
+		333333333333333300000070 /* SyncEngineActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncEngineActor.swift"; sourceTree = "<group>"; };
+		333333333333333300000071 /* PhotoLibraryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibraryMonitor.swift"; sourceTree = "<group>"; };
+		333333333333333300000072 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLogger.swift"; sourceTree = "<group>"; };
+		333333333333333300000073 /* FilenameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilenameSanitizer.swift"; sourceTree = "<group>"; };
+		333333333333333300000074 /* MenuBarPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarPopupView.swift"; sourceTree = "<group>"; };
+		333333333333333300000075 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
+		333333333333333300000076 /* SettingsWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsWindowManager.swift"; sourceTree = "<group>"; };
+		333333333333333300000077 /* StatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusBadgeView.swift"; sourceTree = "<group>"; };
+		333333333333333300000078 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CircularProgressView.swift"; sourceTree = "<group>"; };
+		333333333333333300000079 /* LiquidGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiquidGlass.swift"; sourceTree = "<group>"; };
+		33333333333333330000007A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		33333333333333330000007B /* SynologyPhotoSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SynologyPhotoSync.entitlements"; sourceTree = "<group>"; };
+		33333333333333330000007C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		111111111111111100000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		111111111111111100000006 = {
+			isa = PBXGroup;
+			children = (
+				222222222222222200000001 /* Sources */,
+				222222222222222200000009 /* Resources */,
+				111111111111111100000007 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		111111111111111100000007 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				111111111111111100000008 /* SynologyPhotoSync.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		222222222222222200000001 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				222222222222222200000002 /* App */,
+				222222222222222200000003 /* Models */,
+				222222222222222200000004 /* Storage */,
+				222222222222222200000005 /* Network */,
+				222222222222222200000006 /* Engine */,
+				222222222222222200000007 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		222222222222222200000002 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				333333333333333300000066 /* SynologyPhotoSyncApp.swift */,
+				333333333333333300000067 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		222222222222222200000003 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				333333333333333300000064 /* RemoteMediaInventory.swift */,
+				333333333333333300000068 /* SyncModels.swift */,
+				333333333333333300000069 /* SyncConfig.swift */,
+				33333333333333330000006A /* SynologyAPIModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		222222222222222200000004 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				33333333333333330000006B /* KeychainHelper.swift */,
+				33333333333333330000006C /* SyncDatabase.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		222222222222222200000005 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				33333333333333330000006D /* StreamingMultipartUploader.swift */,
+				33333333333333330000006E /* SynologyAPIClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		222222222222222200000006 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				333333333333333300000065 /* PhotoTransferPlan.swift */,
+				33333333333333330000006F /* SyncState.swift */,
+				333333333333333300000070 /* SyncEngineActor.swift */,
+				333333333333333300000071 /* PhotoLibraryMonitor.swift */,
+				333333333333333300000072 /* AppLogger.swift */,
+				333333333333333300000073 /* FilenameSanitizer.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		222222222222222200000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				333333333333333300000074 /* MenuBarPopupView.swift */,
+				333333333333333300000075 /* SettingsView.swift */,
+				333333333333333300000076 /* SettingsWindowManager.swift */,
+				222222222222222200000008 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		222222222222222200000008 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				333333333333333300000077 /* StatusBadgeView.swift */,
+				333333333333333300000078 /* CircularProgressView.swift */,
+				333333333333333300000079 /* LiquidGlass.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		222222222222222200000009 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				33333333333333330000007A /* Info.plist */,
+				33333333333333330000007B /* SynologyPhotoSync.entitlements */,
+				33333333333333330000007C /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		111111111111111100000002 /* SynologyPhotoSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 111111111111111100000010 /* Build configuration list for PBXNativeTarget "SynologyPhotoSync" */;
+			buildPhases = (
+				111111111111111100000003 /* Sources */,
+				111111111111111100000004 /* Frameworks */,
+				111111111111111100000005 /* Resources */,
+				111111111111111100000015 /* Strip Extended Attributes */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SynologyPhotoSync;
+			productName = SynologyPhotoSync;
+			productReference = 111111111111111100000008 /* SynologyPhotoSync.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		111111111111111100000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 111111111111111100000009 /* Build configuration list for PBXProject "SynologyPhotoSync" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 111111111111111100000006;
+			productRefGroup = 111111111111111100000007 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				111111111111111100000002 /* SynologyPhotoSync */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		111111111111111100000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55555555555555550000007C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		111111111111111100000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				444444444444444400000064 /* RemoteMediaInventory.swift in Sources */,
+				444444444444444400000065 /* PhotoTransferPlan.swift in Sources */,
+				444444444444444400000066 /* SynologyPhotoSyncApp.swift in Sources */,
+				444444444444444400000067 /* AppDelegate.swift in Sources */,
+				444444444444444400000068 /* SyncModels.swift in Sources */,
+				444444444444444400000069 /* SyncConfig.swift in Sources */,
+				44444444444444440000006A /* SynologyAPIModels.swift in Sources */,
+				44444444444444440000006B /* KeychainHelper.swift in Sources */,
+				44444444444444440000006C /* SyncDatabase.swift in Sources */,
+				44444444444444440000006D /* StreamingMultipartUploader.swift in Sources */,
+				44444444444444440000006E /* SynologyAPIClient.swift in Sources */,
+				44444444444444440000006F /* SyncState.swift in Sources */,
+				444444444444444400000070 /* SyncEngineActor.swift in Sources */,
+				444444444444444400000071 /* PhotoLibraryMonitor.swift in Sources */,
+				444444444444444400000072 /* AppLogger.swift in Sources */,
+				444444444444444400000073 /* FilenameSanitizer.swift in Sources */,
+				444444444444444400000074 /* MenuBarPopupView.swift in Sources */,
+				444444444444444400000075 /* SettingsView.swift in Sources */,
+				444444444444444400000076 /* SettingsWindowManager.swift in Sources */,
+				444444444444444400000077 /* StatusBadgeView.swift in Sources */,
+				444444444444444400000078 /* CircularProgressView.swift in Sources */,
+				444444444444444400000079 /* LiquidGlass.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		111111111111111100000015 /* Strip Extended Attributes */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Strip Extended Attributes";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			alwaysOutOfDate = 1;
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xattr -dr com.apple.FinderInfo \"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\" 2>/dev/null || true\nxattr -dr com.apple.ResourceFork \"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\" 2>/dev/null || true\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		111111111111111100000011 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDEFINED_COMPARISON = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+			};
+			name = Debug;
+		};
+		111111111111111100000012 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = "wholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDEFINED_COMPARISON = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+			};
+			name = Release;
+		};
+		111111111111111100000013 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = Resources/SynologyPhotoSync.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				EXTRACT_APP_INTENTS_METADATA = NO;
+				DEAD_CODE_STRIPPING = YES;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_EXTENSIONS = YES;
+			};
+			name = Debug;
+		};
+		111111111111111100000014 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = Resources/SynologyPhotoSync.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				EXTRACT_APP_INTENTS_METADATA = NO;
+				DEAD_CODE_STRIPPING = YES;
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_EXTENSIONS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		111111111111111100000009 /* Build configuration list for PBXProject "SynologyPhotoSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				111111111111111100000011 /* Debug */,
+				111111111111111100000012 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		111111111111111100000010 /* Build configuration list for PBXNativeTarget "SynologyPhotoSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				111111111111111100000013 /* Debug */,
+				111111111111111100000014 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 111111111111111100000001 /* Project object */;
+}
