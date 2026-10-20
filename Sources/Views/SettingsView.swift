@@ -538,7 +538,9 @@ public struct SettingsView: View {
           Text("⚠️ Предупр.").tag(LogEntry.LogLevel?.some(.warning))
           Text("❌ Ошибки").tag(LogEntry.LogLevel?.some(.error))
         }
-        .frame(width: 120)
+        .labelsHidden()
+        .frame(width: 125)
+        .help("Фильтр по уровню сообщений")
 
         Button(action: {
           vm.copyLogs()

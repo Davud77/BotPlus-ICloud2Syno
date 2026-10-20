@@ -101,6 +101,42 @@ import XCTest
         after: SynologyError.uploadFailed(code: 422, message: "unsupported media")))
   }
 
+  func testFatalFailureWhilePausedDoesNotLeaveAnEndedSessionStuck() {
+    let state = state(files: 1)
+    state.togglePause()
+    state.noteError()
+    state.finishSession()
+    XCTAssertEqual(state.currentStage, .error)
+    XCTAssertFalse(state.isSyncing)
+    XCTAssertFalse(state.isPaused)
+  }
+
+  func testNetworkWaitCannotCompleteAndManualPauseRemainsInControl() {
+    let state = state()
+    state.setStage(.uploadingToSynology)
+    state.beginNetworkWait()
+    state.finishSession()
+    XCTAssertTrue(state.isSyncing)
+    XCTAssertEqual(state.currentStage, .waitingForNetwork)
+    state.togglePause()
+    state.endNetworkWait()
+    XCTAssertEqual(state.currentStage, .paused)
+    state.togglePause()
+    XCTAssertEqual(state.currentStage, .uploadingToSynology)
+  }
+
+  func testNetworkCallbackAfterCancellationCannotRestoreActivity() {
+    let state = state()
+    state.beginNetworkWait()
+    state.requestCancellation()
+    state.endNetworkWait()
+    XCTAssertEqual(state.currentStage, .cancelling)
+    state.finishSession()
+    state.beginNetworkWait()
+    XCTAssertEqual(state.currentStage, .cancelled)
+    XCTAssertFalse(state.isSyncing)
+  }
+
   func testPauseGateSupportsTaskCancellation() async {
     let engine = SyncEngineActor()
     await engine.setPaused(true)

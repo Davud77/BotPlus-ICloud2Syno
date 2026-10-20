@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")"
+python3 generate_project.py
 
 # Documents may be managed by iCloud, which attaches attributes forbidden by codesign.
 # Build and sign outside File Provider storage; keep the portable ZIP in the project.

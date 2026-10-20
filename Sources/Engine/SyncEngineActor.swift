@@ -13,11 +13,48 @@ public actor SyncEngineActor {
     confirmedResources.removeAll()
   }
   public func waitUntilReady() async throws {
-    while isPaused {
+    while true {
       try Task.checkCancellation()
+      let manuallyPaused = await MainActor.run { SyncState.shared.isPaused }
+      if !isPaused && !manuallyPaused { return }
       try await Task.sleep(for: .milliseconds(150))
     }
-    try Task.checkCancellation()
+  }
+
+  private func recovering<T>(_ operation: () async throws -> T) async throws -> T {
+    do {
+      let result = try await TransferRetry.run(
+        checkpoint: { try await self.waitUntilReady() },
+        wait: { attempt, network in
+          try await NetworkAvailability.shared.waitBeforeRetry(attempt: attempt, network: network) {
+            try await self.waitUntilReady()
+          }
+        },
+        onRetry: { error, network in
+          await MainActor.run {
+            if network { SyncState.shared.beginNetworkWait() }
+            AppLogger.shared.warning(
+              network
+                ? "Связь прервана. Синхронизация продолжится автоматически; пауза и отмена сохраняют приоритет."
+                : "Повторное извлечение оригинала Photos",
+              details: TransferRetry.message(for: error))
+          }
+        }, operation: operation)
+      await MainActor.run { SyncState.shared.endNetworkWait() }
+      return result
+    } catch {
+      await MainActor.run { SyncState.shared.endNetworkWait() }
+      throw error
+    }
+  }
+
+  public func validateAccess(target: TargetSpace, config: SyncConfig, client: SynologyAPIClient)
+    async throws
+  {
+    try await recovering {
+      try await client.validateAccess(
+        targetSpace: target, allowInsecureSSL: config.allowInsecureSSL)
+    }
   }
 
   nonisolated static func mustStopQueue(after error: Error) -> Bool {
@@ -52,14 +89,16 @@ public actor SyncEngineActor {
     for target in targets {
       let previousFiles = scannedFiles
       let previousFolders = scannedFolders
-      let items = try await apiClient.listMedia(
-        targetSpace: target, allowInsecureSSL: config.allowInsecureSSL,
-        progress: { files, folders in
-          await MainActor.run {
-            SyncState.shared.updateNASScan(
-              files: previousFiles + files, folders: previousFolders + folders)
-          }
-        }, checkpoint: { try await self.waitUntilReady() })
+      let items = try await recovering {
+        try await apiClient.listMedia(
+          targetSpace: target, allowInsecureSSL: config.allowInsecureSSL,
+          progress: { files, folders in
+            await MainActor.run {
+              SyncState.shared.updateNASScan(
+                files: previousFiles + files, folders: previousFolders + folders)
+            }
+          }, checkpoint: { try await self.waitUntilReady() })
+      }
       inventories[target.rawValue] = RemoteMediaInventory(items: items)
       scannedFiles += items.count
       // Folder progress is already published by listMedia; preserve it between spaces.
@@ -113,7 +152,15 @@ public actor SyncEngineActor {
         defer { try? FileManager.default.removeItem(at: directory) }
         let verificationName = source.resource.originalFilename
         await MainActor.run { SyncState.shared.currentFileName = "Проверка: " + verificationName }
-        try await extractResourceToFile(resource: source.resource, destinationURL: local)
+        do {
+          try await extractResourceToFile(resource: source.resource, destinationURL: local)
+        } catch {
+          if Task.isCancelled || error is CancellationError { throw error }
+          AppLogger.warning(
+            "Не удалось извлечь оригинал для сверки; файл остаётся в очереди",
+            details: TransferRetry.message(for: error))
+          break
+        }
         let localHash = try FileFingerprint.read(local)
         for candidate in candidates where candidate.filesize == localHash.size {
           try await waitUntilReady()
@@ -122,9 +169,11 @@ public actor SyncEngineActor {
           if let cachedHash = fingerprints[key] {
             remoteHash = cachedHash
           } else {
-            remoteHash = try await apiClient.originalFingerprint(
-              itemID: candidate.id, targetSpace: plan.target,
-              allowInsecureSSL: config.allowInsecureSSL)
+            remoteHash = try await recovering {
+              try await apiClient.originalFingerprint(
+                itemID: candidate.id, targetSpace: plan.target,
+                allowInsecureSSL: config.allowInsecureSSL)
+            }
             fingerprints[key] = remoteHash
           }
           if localHash == remoteHash {
@@ -203,11 +252,13 @@ public actor SyncEngineActor {
           SyncState.shared.setCurrentFile(
             name: originalName, stage: .uploadingToSynology)
         }
-        let id = try await apiClient.uploadItem(
-          fileURL: file, filename: source.filename, creationDate: plan.creationDate,
-          targetSpace: plan.target, allowInsecureSSL: config.allowInsecureSSL
-        ) { progress in
-          Task { @MainActor in SyncState.shared.updateSynologyProgress(progress) }
+        let id = try await recovering {
+          try await apiClient.uploadItem(
+            fileURL: file, filename: source.filename, creationDate: plan.creationDate,
+            targetSpace: plan.target, allowInsecureSSL: config.allowInsecureSSL
+          ) { progress in
+            Task { @MainActor in SyncState.shared.updateSynologyProgress(progress) }
+          }
         }
         if index == 0 { primaryID = id }
         resourceIDs[source.filename] = id
@@ -222,7 +273,8 @@ public actor SyncEngineActor {
       await MainActor.run { SyncState.shared.markFileSuccess(historyItem: history) }
     } catch {
       await recordError(
-        appleId: asset.localIdentifier, filename: displayName, error: error.localizedDescription,
+        appleId: asset.localIdentifier, filename: displayName,
+        error: TransferRetry.message(for: error),
         database: database)
       if Self.mustStopQueue(after: error) { throw error }
     }
@@ -233,16 +285,20 @@ public actor SyncEngineActor {
     try FileManager.default.createDirectory(
       at: destinationURL.deletingLastPathComponent(), withIntermediateDirectories: true,
       attributes: [.posixPermissions: 0o700])
-    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-      let options = PHAssetResourceRequestOptions()
-      options.isNetworkAccessAllowed = true
-      options.progressHandler = { progress in
-        Task { @MainActor in SyncState.shared.updateICloudProgress(progress) }
-      }
-      PHAssetResourceManager.default().writeData(
-        for: resource, toFile: destinationURL, options: options
-      ) { error in
-        if let error { continuation.resume(throwing: error) } else { continuation.resume() }
+    try await recovering {
+      try? FileManager.default.removeItem(at: destinationURL)
+      try await withCheckedThrowingContinuation {
+        (continuation: CheckedContinuation<Void, Error>) in
+        let options = PHAssetResourceRequestOptions()
+        options.isNetworkAccessAllowed = true
+        options.progressHandler = { progress in
+          Task { @MainActor in SyncState.shared.updateICloudProgress(progress) }
+        }
+        PHAssetResourceManager.default().writeData(
+          for: resource, toFile: destinationURL, options: options
+        ) { error in
+          if let error { continuation.resume(throwing: error) } else { continuation.resume() }
+        }
       }
     }
     try Task.checkCancellation()
@@ -301,8 +357,10 @@ public actor SyncEngineActor {
 
       do {
         if albumCache[target.rawValue] == nil {
-          albumCache[target.rawValue] = try await apiClient.listAlbums(
-            allowInsecureSSL: config.allowInsecureSSL, targetSpace: target)
+          albumCache[target.rawValue] = try await recovering {
+            try await apiClient.listAlbums(
+              allowInsecureSSL: config.allowInsecureSSL, targetSpace: target)
+          }
         }
         let existingSynologyAlbums = albumCache[target.rawValue] ?? []
         // 2. Ищем или создаем альбом на Synology с таким же именем
@@ -316,18 +374,29 @@ public actor SyncEngineActor {
         }) {
           synologyAlbumId = match.id
         } else {
-          synologyAlbumId = try await apiClient.createAlbum(
-            name: albumTitle, allowInsecureSSL: config.allowInsecureSSL, targetSpace: target)
+          synologyAlbumId = try await recovering {
+            let albums = try await apiClient.listAlbums(
+              allowInsecureSSL: config.allowInsecureSSL, targetSpace: target)
+            if let existing = albums.first(where: {
+              $0.name.caseInsensitiveCompare(albumTitle) == .orderedSame
+            }) {
+              return existing.id
+            }
+            return try await apiClient.createAlbum(
+              name: albumTitle, allowInsecureSSL: config.allowInsecureSSL, targetSpace: target)
+          }
           albumCache[target.rawValue, default: []].append(
             SynologyAlbumItem(id: synologyAlbumId, name: albumTitle, itemCount: 0))
         }
 
         // 3. Добавляем элементы в альбом без дублирования файлов
-        try await apiClient.addItemsToAlbum(
-          albumId: synologyAlbumId,
-          itemIds: synologyItemIds,
-          allowInsecureSSL: config.allowInsecureSSL, targetSpace: target
-        )
+        try await recovering {
+          try await apiClient.addItemsToAlbum(
+            albumId: synologyAlbumId,
+            itemIds: synologyItemIds,
+            allowInsecureSSL: config.allowInsecureSSL, targetSpace: target
+          )
+        }
 
         // 4. Фиксируем успешную синхронизацию альбома
         try Task.checkCancellation()
@@ -353,7 +422,7 @@ public actor SyncEngineActor {
         await recordError(
           appleId: collection.localIdentifier,
           filename: "Альбом: \(albumTitle)",
-          error: error.localizedDescription,
+          error: TransferRetry.message(for: error),
           database: database, isAlbum: true
         )
         if Self.mustStopQueue(after: error) { throw error }

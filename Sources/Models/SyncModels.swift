@@ -9,6 +9,7 @@ public enum SyncStage: String, Codable, CaseIterable, Sendable {
   case uploadingToSynology
   case syncingAlbums
   case paused
+  case waitingForNetwork
   case cancelling
   case cancelled
   case attention
@@ -29,6 +30,8 @@ public enum SyncStage: String, Codable, CaseIterable, Sendable {
       return "Выгрузка на Synology..."
     case .syncingAlbums:
       return "Синхронизация альбомов..."
+    case .waitingForNetwork:
+      return "Ожидание сети…"
     case .paused:
       return "Приостановлено"
     case .cancelling:

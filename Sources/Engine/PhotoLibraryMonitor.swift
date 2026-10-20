@@ -271,14 +271,12 @@ public final class PhotoLibraryMonitor: NSObject, ObservableObject, PHPhotoLibra
         if config.targetSpace == .personal
           || (config.targetSpace == .separate && config.libraryScope != .sharedOnly)
         {
-          try await apiClient.validateAccess(
-            targetSpace: .personal, allowInsecureSSL: config.allowInsecureSSL)
+          try await engineActor.validateAccess(target: .personal, config: config, client: apiClient)
         }
         if config.targetSpace == .shared
           || (config.targetSpace == .separate && config.libraryScope != .personalOnly)
         {
-          try await apiClient.validateAccess(
-            targetSpace: .shared, allowInsecureSSL: config.allowInsecureSSL)
+          try await engineActor.validateAccess(target: .shared, config: config, client: apiClient)
         }
         state.connectionStatus = .connected(
           serverName: URL(string: config.serverURL)?.host ?? "Synology",
@@ -320,17 +318,11 @@ public final class PhotoLibraryMonitor: NSObject, ObservableObject, PHPhotoLibra
   public func pauseSync() {
     guard SyncState.shared.isSyncing, !SyncState.shared.isPaused else { return }
     SyncState.shared.togglePause()
-    Task {
-      await engineActor.setPaused(true)
-    }
   }
 
   public func resumeSync() {
     guard SyncState.shared.isSyncing, SyncState.shared.isPaused else { return }
     SyncState.shared.togglePause()
-    Task {
-      await engineActor.setPaused(false)
-    }
   }
 
   public func cancelSync() {

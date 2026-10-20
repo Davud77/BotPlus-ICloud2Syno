@@ -3,73 +3,81 @@ warning: <home>/Library/org.swift.swiftpm/security is not accessible or not writ
 warning: <home>/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
 warning: 'aphotos2syno': failed storing manifest for 'aphotos2syno' in cache: attempt to write a readonly database
 Building for debugging...
-[3 / 15] SynologyPhotoSync-product
-[7 / 19] SynologyPhotoSync-product
+[1 / 6] SynologyPhotoSync
+[3 / 13] SynologyPhotoSync
+[7 / 17] SynologyPhotoSync-product
+[13 / 19] SynologyPhotoSync
 [15 / 24] SynologyPhotoSync-product
 [18 / 23] SynologyPhotoSyncTests-product
 [20 / 25] SynologyPhotoSyncTests-product
-[24 / 27] SynologyPhotoSyncTests-product
 [26 / 30] SynologyPhotoSyncTests-product
-Build complete! (4.04 sec)
-Test Suite 'All tests' started at 2026-10-19 10:36:14.008.
-Test Suite 'SynologyPhotoSyncTests.xctest' started at 2026-10-19 10:36:14.010.
-Test Suite 'LiveSynologyTests' started at 2026-10-19 10:36:14.010.
+Build complete! (3.31 sec)
+Test Suite 'All tests' started at 2026-10-20 22:47:10.222.
+Test Suite 'SynologyPhotoSyncTests.xctest' started at 2026-10-20 22:47:10.223.
+Test Suite 'LiveSynologyTests' started at 2026-10-20 22:47:10.223.
 Test Case '-[SynologyPhotoSyncTests.LiveSynologyTests testRealFullInventoryReadOnly]' started.
 <project>/Tests/LiveSynologyTests.swift:12: -[SynologyPhotoSyncTests.LiveSynologyTests testRealFullInventoryReadOnly] : Test skipped - Full NAS inventory requires explicit opt-in
 Test Case '-[SynologyPhotoSyncTests.LiveSynologyTests testRealFullInventoryReadOnly]' skipped (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.LiveSynologyTests testRealUploadDuplicateAndAlbum]' started.
 <project>/Tests/LiveSynologyTests.swift:57: -[SynologyPhotoSyncTests.LiveSynologyTests testRealUploadDuplicateAndAlbum] : Test skipped - Real NAS tests require explicit credentials in the environment
 Test Case '-[SynologyPhotoSyncTests.LiveSynologyTests testRealUploadDuplicateAndAlbum]' skipped (0.000 seconds).
-Test Suite 'LiveSynologyTests' passed at 2026-10-19 10:36:14.011.
-	 Executed 2 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.001 (0.001) seconds
-Test Suite 'NetworkTests' started at 2026-10-19 10:36:14.011.
+Test Suite 'LiveSynologyTests' passed at 2026-10-20 22:47:10.224.
+	 Executed 2 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'NetworkTests' started at 2026-10-20 22:47:10.224.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsAcceptsEmptySuccessData]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsAcceptsEmptySuccessData]' passed (0.007 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsAcceptsEmptySuccessData]' passed (0.008 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsRejectsHTMLAndHTTPFailure]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsRejectsHTMLAndHTTPFailure]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testAddItemsRejectsHTMLAndHTTPFailure]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testAlbumPaginationDoesNotStopAtFirstPage]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testAlbumPaginationDoesNotStopAtFirstPage]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testAlbumPaginationDoesNotStopAtFirstPage]' passed (0.003 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testCancelledOperationDoesNotReachNetwork]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testCancelledOperationDoesNotReachNetwork]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testConnectionRejectsPhotosAPIFailure]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testConnectionRejectsPhotosAPIFailure]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testConnectionUsesPOSTAndDoesNotPutSecretsInURL]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testConnectionUsesPOSTAndDoesNotPutSecretsInURL]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testConnectionUsesPOSTAndDoesNotPutSecretsInURL]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testInterruptedAPIRequestRecoversWithoutReplacingSession]' started.
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testInterruptedAPIRequestRecoversWithoutReplacingSession]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testInvalidInventoryIDsAreRejected]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testInvalidInventoryIDsAreRejected]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testInvalidInventoryIDsAreRejected]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryFailureDoesNotReturnPartialSuccess]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryFailureDoesNotReturnPartialSuccess]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryFailureDoesNotReturnPartialSuccess]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryTraversesNestedFoldersAndAllShortPages]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryTraversesNestedFoldersAndAllShortPages]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryUsesSeparateSharedNamespace]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryUsesSeparateSharedNamespace]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testInventoryUsesSeparateSharedNamespace]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testMultipartParametersMatchRealSynologyJSONContract]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testMultipartParametersMatchRealSynologyJSONContract]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testMultipartParametersMatchRealSynologyJSONContract]' passed (0.004 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testParameterRejectionReportsActualField]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testParameterRejectionReportsActualField]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testRedirectDoesNotForwardCredentials]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testRedirectDoesNotForwardCredentials]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testRepeatedAlbumPageFailsInsteadOfLooping]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testRepeatedAlbumPageFailsInsteadOfLooping]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testRepeatedAlbumPageFailsInsteadOfLooping]' passed (0.003 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionCookieRejectsHeaderAndCookieInjection]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionCookieRejectsHeaderAndCookieInjection]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionExpiryRetriesOnceAndStops]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionExpiryRetriesOnceAndStops]' passed (0.004 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionExpiryRetriesOnceAndStops]' passed (0.005 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionRefreshRecovers]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testSessionRefreshRecovers]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testUploadNeverRecordsMissingIDOrParameterErrorAsSuccess]' started.
-Test Case '-[SynologyPhotoSyncTests.NetworkTests testUploadNeverRecordsMissingIDOrParameterErrorAsSuccess]' passed (0.009 seconds).
+Test Case '-[SynologyPhotoSyncTests.NetworkTests testUploadNeverRecordsMissingIDOrParameterErrorAsSuccess]' passed (0.011 seconds).
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testUploadReturnsConfirmedID]' started.
 Test Case '-[SynologyPhotoSyncTests.NetworkTests testUploadReturnsConfirmedID]' passed (0.003 seconds).
-Test Suite 'NetworkTests' passed at 2026-10-19 10:36:14.049.
-	 Executed 19 tests, with 0 failures (0 unexpected) in 0.037 (0.038) seconds
-Test Suite 'RemoteInventoryTests' started at 2026-10-19 10:36:14.049.
+Test Suite 'NetworkTests' passed at 2026-10-20 22:47:10.276.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.050 (0.051) seconds
+Test Suite 'ProjectMembershipTests' started at 2026-10-20 22:47:10.276.
+Test Case '-[SynologyPhotoSyncTests.ProjectMembershipTests testEverySwiftSourceBelongsToXcodeTarget]' started.
+Test Case '-[SynologyPhotoSyncTests.ProjectMembershipTests testEverySwiftSourceBelongsToXcodeTarget]' passed (0.001 seconds).
+Test Suite 'ProjectMembershipTests' passed at 2026-10-20 22:47:10.277.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'RemoteInventoryTests' started at 2026-10-20 22:47:10.277.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testAmbiguousNamesRequireContentVerification]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testAmbiguousNamesRequireContentVerification]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testCountersDistinguishExistingFilesAndNewUploads]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testCountersDistinguishExistingFilesAndNewUploads]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testFingerprintsRejectDifferentBytesWithSameSize]' started.
-Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testFingerprintsRejectDifferentBytesWithSameSize]' passed (0.154 seconds).
+Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testFingerprintsRejectDifferentBytesWithSameSize]' passed (0.225 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testGeneratedIdentityRestoresMappingWithoutLocalCache]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testGeneratedIdentityRestoresMappingWithoutLocalCache]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testIncompleteJSONDatabaseIsNotSilentlyReset]' started.
@@ -77,57 +85,63 @@ Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testIncompleteJSONDatab
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testLegacyUnicodeAndTransliteratedNamesAreCandidates]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testLegacyUnicodeAndTransliteratedNamesAreCandidates]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testPartialLivePhotoRemainsUnsyncedButKeepsConfirmedPhotoID]' started.
-Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testPartialLivePhotoRemainsUnsyncedButKeepsConfirmedPhotoID]' passed (0.003 seconds).
+Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testPartialLivePhotoRemainsUnsyncedButKeepsConfirmedPhotoID]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testPre12DatabaseMigratesWithoutDroppingMappings]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testPre12DatabaseMigratesWithoutDroppingMappings]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReconciliationFailureDoesNotMarkConfirmedAssetsInMemory]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReconciliationFailureDoesNotMarkConfirmedAssetsInMemory]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReconciliationInvalidatesDeletedFilesAndPreservesUnselectedMappings]' started.
-Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReconciliationInvalidatesDeletedFilesAndPreservesUnselectedMappings]' passed (0.004 seconds).
+Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReconciliationInvalidatesDeletedFilesAndPreservesUnselectedMappings]' passed (0.006 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReusedRemoteIDWithDifferentFilenameIsNotTrusted]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testReusedRemoteIDWithDifferentFilenameIsNotTrusted]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testSameNameIsNotAutomaticallyRecognizedAsAnExistingAsset]' started.
 Test Case '-[SynologyPhotoSyncTests.RemoteInventoryTests testSameNameIsNotAutomaticallyRecognizedAsAnExistingAsset]' passed (0.000 seconds).
-Test Suite 'RemoteInventoryTests' passed at 2026-10-19 10:36:14.219.
-	 Executed 12 tests, with 0 failures (0 unexpected) in 0.169 (0.170) seconds
-Test Suite 'SecurityAndStorageTests' started at 2026-10-19 10:36:14.219.
+Test Suite 'RemoteInventoryTests' passed at 2026-10-20 22:47:10.520.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.242 (0.243) seconds
+Test Suite 'SecurityAndStorageTests' started at 2026-10-20 22:47:10.520.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testAssetNamesAreStableDistinctAndPreserveLivePair]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testAssetNamesAreStableDistinctAndPreserveLivePair]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testAssetNamesAreStableDistinctAndPreserveLivePair]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseDoesNotOverwriteCorruption]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseDoesNotOverwriteCorruption]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseDoesNotOverwriteCorruption]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseRollsBackWhenDiskWriteFails]' started.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseRollsBackWhenDiskWriteFails]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseRoundTripAndFailureRecovery]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseRoundTripAndFailureRecovery]' passed (0.003 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDatabaseRoundTripAndFailureRecovery]' passed (0.004 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDestinationIsolation]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDestinationIsolation]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testDestinationIsolation]' passed (0.003 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testFilenameCannotInjectHeadersOrPaths]' started.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testFilenameCannotInjectHeadersOrPaths]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testFormEscapesPasswordAndUnicode]' started.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testFormEscapesPasswordAndUnicode]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartPreservesBinaryAndUsesPrivateFile]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartPreservesBinaryAndUsesPrivateFile]' passed (0.152 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartPreservesBinaryAndUsesPrivateFile]' passed (0.224 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartRejectsHeaderInjectionInFieldName]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartRejectsHeaderInjectionInFieldName]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testMultipartRejectsHeaderInjectionInFieldName]' passed (0.003 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testPauseKeepsCurrentStageAndResumesIt]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testPauseKeepsCurrentStageAndResumesIt]' passed (0.002 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testPauseKeepsCurrentStageAndResumesIt]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testResponseRejectsFalseSuccessAndInvalidJSON]' started.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testResponseRejectsFalseSuccessAndInvalidJSON]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSessionProgressIgnoresHistoricalErrorsAndAlbums]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSessionProgressIgnoresHistoricalErrorsAndAlbums]' passed (0.003 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSessionProgressIgnoresHistoricalErrorsAndAlbums]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSuccessfulAlbumRetryClearsPreviousFailure]' started.
-Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSuccessfulAlbumRetryClearsPreviousFailure]' passed (0.007 seconds).
+Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testSuccessfulAlbumRetryClearsPreviousFailure]' passed (0.003 seconds).
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testURLRequiresHTTPSAndRejectsEmbeddedCredentials]' started.
 Test Case '-[SynologyPhotoSyncTests.SecurityAndStorageTests testURLRequiresHTTPSAndRejectsEmbeddedCredentials]' passed (0.000 seconds).
-Test Suite 'SecurityAndStorageTests' passed at 2026-10-19 10:36:14.394.
-	 Executed 14 tests, with 0 failures (0 unexpected) in 0.175 (0.175) seconds
-Test Suite 'SessionLifecycleTests' started at 2026-10-19 10:36:14.394.
+Test Suite 'SecurityAndStorageTests' passed at 2026-10-20 22:47:10.767.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.246 (0.247) seconds
+Test Suite 'SessionLifecycleTests' started at 2026-10-20 22:47:10.767.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testCancellationIsImmediateAndSurvivesLateStageCallbacks]' started.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testCancellationIsImmediateAndSurvivesLateStageCallbacks]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testCancellationWhilePausedIsNotSuccess]' started.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testCancellationWhilePausedIsNotSuccess]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testFatalErrorPreventsCompleted]' started.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testFatalErrorPreventsCompleted]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testFatalFailureWhilePausedDoesNotLeaveAnEndedSessionStuck]' started.
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testFatalFailureWhilePausedDoesNotLeaveAnEndedSessionStuck]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNetworkCallbackAfterCancellationCannotRestoreActivity]' started.
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNetworkCallbackAfterCancellationCannotRestoreActivity]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNetworkWaitCannotCompleteAndManualPauseRemainsInControl]' started.
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNetworkWaitCannotCompleteAndManualPauseRemainsInControl]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNewSessionClearsPreviousWarningAndCancellation]' started.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testNewSessionClearsPreviousWarningAndCancellation]' passed (0.001 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testOnlyCleanFullyProcessedSessionCompletes]' started.
@@ -137,17 +151,34 @@ Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPausedFinalFileDoe
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPauseGateSupportsTaskCancellation]' started.
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPauseGateSupportsTaskCancellation]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPersistentAuthAndParameterErrorsStopQueue]' started.
-Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPersistentAuthAndParameterErrorsStopQueue]' passed (0.001 seconds).
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testPersistentAuthAndParameterErrorsStopQueue]' passed (0.000 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testUnprocessedFilesAndAlbumsPreventCompleted]' started.
-Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testUnprocessedFilesAndAlbumsPreventCompleted]' passed (0.003 seconds).
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testUnprocessedFilesAndAlbumsPreventCompleted]' passed (0.002 seconds).
 Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testWarningPreventsCompletedEvenWhenAllFilesSucceeded]' started.
-Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testWarningPreventsCompletedEvenWhenAllFilesSucceeded]' passed (0.002 seconds).
-Test Suite 'SessionLifecycleTests' passed at 2026-10-19 10:36:14.407.
-	 Executed 10 tests, with 0 failures (0 unexpected) in 0.012 (0.013) seconds
-Test Suite 'SynologyPhotoSyncTests.xctest' passed at 2026-10-19 10:36:14.407.
-	 Executed 57 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.394 (0.398) seconds
-Test Suite 'All tests' passed at 2026-10-19 10:36:14.407.
-	 Executed 57 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.394 (0.400) seconds
+Test Case '-[SynologyPhotoSyncTests.SessionLifecycleTests testWarningPreventsCompletedEvenWhenAllFilesSucceeded]' passed (0.001 seconds).
+Test Suite 'SessionLifecycleTests' passed at 2026-10-20 22:47:10.779.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.011 (0.012) seconds
+Test Suite 'TransferRetryTests' started at 2026-10-20 22:47:10.779.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testAuthenticationFailureIsNeverRetried]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testAuthenticationFailureIsNeverRetried]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testCancellationDuringNetworkWaitPreventsAnyMoreRequests]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testCancellationDuringNetworkWaitPreventsAnyMoreRequests]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testCancellationWhileManuallyPausedDoesNotResumeOnNetworkRecovery]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testCancellationWhileManuallyPausedDoesNotResumeOnNetworkRecovery]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testInternalPhotoErrorHasOnlyTwoRetries]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testInternalPhotoErrorHasOnlyTwoRetries]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testManualPauseBlocksRetryEvenWhenConnectivityReturns]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testManualPauseBlocksRetryEvenWhenConnectivityReturns]' passed (0.158 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testNetworkErrorsIncludePhotos3169AndNestedErrors]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testNetworkErrorsIncludePhotos3169AndNestedErrors]' passed (0.000 seconds).
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testNetworkRecoveryRetriesCurrentOperationWithoutSkippingIt]' started.
+Test Case '-[SynologyPhotoSyncTests.TransferRetryTests testNetworkRecoveryRetriesCurrentOperationWithoutSkippingIt]' passed (0.000 seconds).
+Test Suite 'TransferRetryTests' passed at 2026-10-20 22:47:10.939.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.159 (0.160) seconds
+Test Suite 'SynologyPhotoSyncTests.xctest' passed at 2026-10-20 22:47:10.939.
+	 Executed 69 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.711 (0.716) seconds
+Test Suite 'All tests' passed at 2026-10-20 22:47:10.939.
+	 Executed 69 tests, with 2 tests skipped and 0 failures (0 unexpected) in 0.711 (0.717) seconds
 ◇ Test run started.
 ↳ Testing Library Version: 2084
 ↳ Target Platform: arm64e-apple-macos14.0

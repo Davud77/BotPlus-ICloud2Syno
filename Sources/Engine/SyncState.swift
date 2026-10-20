@@ -56,6 +56,8 @@ public final class SyncState: ObservableObject {
   @Published public var failedItems: [SyncErrorItem] = []
 
   private var stageBeforePause: SyncStage = .scanning
+  private var stageBeforeNetworkWait: SyncStage?
+  private var connectionBeforeNetworkWait: ConnectionStatus?
   private var sessionErrorCount = 0
   private var fileFailureCount = 0
 
@@ -74,6 +76,8 @@ public final class SyncState: ObservableObject {
   }
 
   public func startNewSession(totalFiles: Int, totalAlbums: Int) {
+    self.stageBeforeNetworkWait = nil
+    self.connectionBeforeNetworkWait = nil
     self.isReconciling = true
     self.totalSelectedCount = totalFiles
     self.alreadyPresentCount = 0
@@ -185,6 +189,29 @@ public final class SyncState: ObservableObject {
     currentStage = isPaused ? .paused : stage
   }
 
+  public func beginNetworkWait() {
+    guard isSyncing, currentStage != .cancelling, currentStage != .cancelled else { return }
+    if stageBeforeNetworkWait == nil {
+      stageBeforeNetworkWait = isPaused ? stageBeforePause : currentStage
+      connectionBeforeNetworkWait = connectionStatus
+    }
+    connectionStatus = .disconnected
+    setStage(.waitingForNetwork)
+    uploadSpeedText = ""
+  }
+
+  public func endNetworkWait() {
+    guard let previous = stageBeforeNetworkWait else { return }
+    stageBeforeNetworkWait = nil
+    if currentStage != .cancelling && currentStage != .cancelled,
+      let connection = connectionBeforeNetworkWait
+    {
+      connectionStatus = connection
+    }
+    connectionBeforeNetworkWait = nil
+    setStage(previous)
+  }
+
   public func noteWarning() {
     guard isSyncing else { return }
     warningCount += 1
@@ -207,11 +234,15 @@ public final class SyncState: ObservableObject {
 
   public func finishSession(cancelled: Bool = false) {
     guard isSyncing else { return }
-    // A late callback must never turn a paused/stopping run into a successful run.
-    if isPaused && !cancelled && currentStage != .cancelling { return }
     reloadFromDatabase()
-    let wasCancelled = cancelled || currentStage == .cancelling
     let hasErrors = sessionErrorCount > 0 || !failedItems.isEmpty || currentStage == .error
+    // Pause blocks successful completion; fatal failure must still release the ended task.
+    if !cancelled && currentStage != .cancelling
+      && (currentStage == .waitingForNetwork || (isPaused && !hasErrors))
+    {
+      return
+    }
+    let wasCancelled = cancelled || currentStage == .cancelling
     let incomplete = remainingCount > 0 || processedAlbumsCount < totalAlbumsCount
     isSyncing = false
     isReconciling = false

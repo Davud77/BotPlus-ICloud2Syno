@@ -42,8 +42,4 @@ public final class SettingsWindowManager: NSObject, NSWindowDelegate {
     NSApp.activate(ignoringOtherApps: true)
   }
 
-  public func windowWillClose(_ notification: Notification) {
-    // Скрываем иконку из Dock при закрытии окна настроек (возврат в режим строки меню)
-    NSApp.setActivationPolicy(.accessory)
-  }
 }

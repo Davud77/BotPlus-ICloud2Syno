@@ -1,29 +1,14 @@
 import os
 
+# Discover all Swift sources. Missing target membership must not depend on a manual list.
+from pathlib import Path
+import hashlib
+
 sources = [
-    ("Models", "RemoteMediaInventory.swift", "Sources/Models/RemoteMediaInventory.swift"),
-    ("Engine", "PhotoTransferPlan.swift", "Sources/Engine/PhotoTransferPlan.swift"),
-    ("App", "SynologyPhotoSyncApp.swift", "Sources/App/SynologyPhotoSyncApp.swift"),
-    ("App", "AppDelegate.swift", "Sources/App/AppDelegate.swift"),
-    ("Models", "SyncModels.swift", "Sources/Models/SyncModels.swift"),
-    ("Models", "SyncConfig.swift", "Sources/Models/SyncConfig.swift"),
-    ("Models", "SynologyAPIModels.swift", "Sources/Models/SynologyAPIModels.swift"),
-    ("Storage", "KeychainHelper.swift", "Sources/Storage/KeychainHelper.swift"),
-    ("Storage", "SyncDatabase.swift", "Sources/Storage/SyncDatabase.swift"),
-    ("Network", "StreamingMultipartUploader.swift", "Sources/Network/StreamingMultipartUploader.swift"),
-    ("Network", "SynologyAPIClient.swift", "Sources/Network/SynologyAPIClient.swift"),
-    ("Engine", "SyncState.swift", "Sources/Engine/SyncState.swift"),
-    ("Engine", "SyncEngineActor.swift", "Sources/Engine/SyncEngineActor.swift"),
-    ("Engine", "PhotoLibraryMonitor.swift", "Sources/Engine/PhotoLibraryMonitor.swift"),
-    ("Engine", "AppLogger.swift", "Sources/Engine/AppLogger.swift"),
-    ("Engine", "FilenameSanitizer.swift", "Sources/Engine/FilenameSanitizer.swift"),
-    ("Views", "MenuBarPopupView.swift", "Sources/Views/MenuBarPopupView.swift"),
-    ("Views", "SettingsView.swift", "Sources/Views/SettingsView.swift"),
-    ("Views", "SettingsWindowManager.swift", "Sources/Views/SettingsWindowManager.swift"),
-    ("Views/Components", "StatusBadgeView.swift", "Sources/Views/Components/StatusBadgeView.swift"),
-    ("Views/Components", "CircularProgressView.swift", "Sources/Views/Components/CircularProgressView.swift"),
-    ("Views/Components", "LiquidGlass.swift", "Sources/Views/Components/LiquidGlass.swift"),
+    (str(path.parent.relative_to("Sources")), path.name, path.as_posix())
+    for path in sorted(Path("Sources").rglob("*.swift"))
 ]
+
 
 resources = [
     ("Resources", "Info.plist", "Resources/Info.plist"),
@@ -66,8 +51,9 @@ build_files = {}
 
 idx = 100
 for group, name, path in sources:
-    f_id = f"3333333333333333{idx:08X}"
-    b_id = f"4444444444444444{idx:08X}"
+    digest = hashlib.sha256(path.encode()).hexdigest()[:16].upper()
+    f_id = "33333333" + digest
+    b_id = "44444444" + digest
     file_refs[(group, name)] = (f_id, path)
     build_files[(group, name)] = b_id
     idx += 1
@@ -439,7 +425,7 @@ out.append("\t\t\t\tCODE_SIGN_ENTITLEMENTS = Resources/SynologyPhotoSync.entitle
 out.append("\t\t\t\tCODE_SIGN_IDENTITY = \"-\";")
 out.append("\t\t\t\tCODE_SIGN_STYLE = Automatic;")
 out.append("\t\t\t\tCOMBINE_HIDPI_IMAGES = YES;")
-out.append("\t\t\t\tCURRENT_PROJECT_VERSION = 3;")
+out.append("\t\t\t\tCURRENT_PROJECT_VERSION = 4;")
 out.append("\t\t\t\tENABLE_HARDENED_RUNTIME = YES;")
 out.append("\t\t\t\tGENERATE_INFOPLIST_FILE = NO;")
 out.append("\t\t\t\tINFOPLIST_FILE = Resources/Info.plist;")
@@ -447,7 +433,7 @@ out.append("\t\t\t\tLD_RUNPATH_SEARCH_PATHS = (")
 out.append("\t\t\t\t\t\"$(inherited)\",")
 out.append("\t\t\t\t\t\"@executable_path/../Frameworks\",")
 out.append("\t\t\t\t);")
-out.append("\t\t\t\tMARKETING_VERSION = 1.2.0;")
+out.append("\t\t\t\tMARKETING_VERSION = 1.3.0;")
 out.append("\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;")
 out.append("\t\t\t\tPRODUCT_NAME = \"$(TARGET_NAME)\";")
 out.append("\t\t\t\tSWIFT_VERSION = 5.0;")
@@ -469,7 +455,7 @@ out.append("\t\t\t\tCODE_SIGN_IDENTITY = \"-\";")
 out.append("\t\t\t\tCODE_SIGN_STYLE = Automatic;")
 out.append("\t\t\t\tCODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;")
 out.append("\t\t\t\tCOMBINE_HIDPI_IMAGES = YES;")
-out.append("\t\t\t\tCURRENT_PROJECT_VERSION = 3;")
+out.append("\t\t\t\tCURRENT_PROJECT_VERSION = 4;")
 out.append("\t\t\t\tENABLE_HARDENED_RUNTIME = YES;")
 out.append("\t\t\t\tGENERATE_INFOPLIST_FILE = NO;")
 out.append("\t\t\t\tINFOPLIST_FILE = Resources/Info.plist;")
@@ -477,7 +463,7 @@ out.append("\t\t\t\tLD_RUNPATH_SEARCH_PATHS = (")
 out.append("\t\t\t\t\t\"$(inherited)\",")
 out.append("\t\t\t\t\t\"@executable_path/../Frameworks\",")
 out.append("\t\t\t\t);")
-out.append("\t\t\t\tMARKETING_VERSION = 1.2.0;")
+out.append("\t\t\t\tMARKETING_VERSION = 1.3.0;")
 out.append("\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;")
 out.append("\t\t\t\tPRODUCT_NAME = \"$(TARGET_NAME)\";")
 out.append("\t\t\t\tSWIFT_VERSION = 5.0;")
@@ -517,7 +503,12 @@ out.append("\t};")
 out.append(f"\trootObject = {proj_id} /* Project object */;")
 out.append("}")
 
-with open("SynologyPhotoSync.xcodeproj/project.pbxproj", "w") as f:
-    f.write("\n".join(out) + "\n")
-
+import sys
+project_path = Path("SynologyPhotoSync.xcodeproj/project.pbxproj")
+content = "\n".join(out) + "\n"
+if "--check" in sys.argv:
+    if not project_path.exists() or project_path.read_text() != content:
+        raise SystemExit("Xcode project is stale. Run python3 generate_project.py")
+elif not project_path.exists() or project_path.read_text() != content:
+    project_path.write_text(content)
 print("SUCCESS")

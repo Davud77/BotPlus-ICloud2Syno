@@ -56,7 +56,7 @@ public struct StatusBadgeView: View {
       return .blue
     case .syncingAlbums:
       return .purple
-    case .paused, .attention:
+    case .paused, .waitingForNetwork, .attention:
       return .yellow
     case .completed:
       return .green

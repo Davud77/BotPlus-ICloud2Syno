@@ -7,58 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		444444444444444400000064 /* RemoteMediaInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000064 /* RemoteMediaInventory.swift */; };
-		444444444444444400000065 /* PhotoTransferPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000065 /* PhotoTransferPlan.swift */; };
-		444444444444444400000066 /* SynologyPhotoSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000066 /* SynologyPhotoSyncApp.swift */; };
-		444444444444444400000067 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000067 /* AppDelegate.swift */; };
-		444444444444444400000068 /* SyncModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000068 /* SyncModels.swift */; };
-		444444444444444400000069 /* SyncConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000069 /* SyncConfig.swift */; };
-		44444444444444440000006A /* SynologyAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006A /* SynologyAPIModels.swift */; };
-		44444444444444440000006B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006B /* KeychainHelper.swift */; };
-		44444444444444440000006C /* SyncDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006C /* SyncDatabase.swift */; };
-		44444444444444440000006D /* StreamingMultipartUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006D /* StreamingMultipartUploader.swift */; };
-		44444444444444440000006E /* SynologyAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006E /* SynologyAPIClient.swift */; };
-		44444444444444440000006F /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000006F /* SyncState.swift */; };
-		444444444444444400000070 /* SyncEngineActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000070 /* SyncEngineActor.swift */; };
-		444444444444444400000071 /* PhotoLibraryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000071 /* PhotoLibraryMonitor.swift */; };
-		444444444444444400000072 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000072 /* AppLogger.swift */; };
-		444444444444444400000073 /* FilenameSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000073 /* FilenameSanitizer.swift */; };
-		444444444444444400000074 /* MenuBarPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000074 /* MenuBarPopupView.swift */; };
-		444444444444444400000075 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000075 /* SettingsView.swift */; };
-		444444444444444400000076 /* SettingsWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000076 /* SettingsWindowManager.swift */; };
-		444444444444444400000077 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000077 /* StatusBadgeView.swift */; };
-		444444444444444400000078 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000078 /* CircularProgressView.swift */; };
-		444444444444444400000079 /* LiquidGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000079 /* LiquidGlass.swift */; };
-		55555555555555550000007C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000007C /* Assets.xcassets */; };
+		444444440577BC2084358C58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333330577BC2084358C58 /* AppDelegate.swift */; };
+		444444444040AA352A376087 /* SynologyPhotoSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333334040AA352A376087 /* SynologyPhotoSyncApp.swift */; };
+		44444444860E79EA4EB4C16F /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333860E79EA4EB4C16F /* AppLogger.swift */; };
+		4444444440035D6CE3070981 /* FilenameSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333340035D6CE3070981 /* FilenameSanitizer.swift */; };
+		4444444460F3CA63DCA55407 /* PhotoLibraryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */; };
+		4444444466365A15462CD825 /* PhotoTransferPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333366365A15462CD825 /* PhotoTransferPlan.swift */; };
+		44444444C55BFBD76DD77329 /* SyncEngineActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333C55BFBD76DD77329 /* SyncEngineActor.swift */; };
+		4444444469EF2CCE29A7BA70 /* SyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333369EF2CCE29A7BA70 /* SyncState.swift */; };
+		444444447D001CD486DC69A8 /* RemoteMediaInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333337D001CD486DC69A8 /* RemoteMediaInventory.swift */; };
+		444444445841FB769AF1FE2D /* SyncConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333335841FB769AF1FE2D /* SyncConfig.swift */; };
+		444444441F31EE09E18D662F /* SyncModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333331F31EE09E18D662F /* SyncModels.swift */; };
+		44444444BB5D7EF080B738CA /* SynologyAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333BB5D7EF080B738CA /* SynologyAPIModels.swift */; };
+		444444448EDE1242DB046126 /* StreamingMultipartUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333338EDE1242DB046126 /* StreamingMultipartUploader.swift */; };
+		444444449E4707C0A40413E3 /* SynologyAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333339E4707C0A40413E3 /* SynologyAPIClient.swift */; };
+		44444444B208C9E60581AD6B /* TransferRetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333B208C9E60581AD6B /* TransferRetry.swift */; };
+		444444445819DC8C258722BA /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333335819DC8C258722BA /* KeychainHelper.swift */; };
+		444444449EEA0A29C677A5CB /* SyncDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333339EEA0A29C677A5CB /* SyncDatabase.swift */; };
+		4444444434AEBCF638A54606 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333334AEBCF638A54606 /* CircularProgressView.swift */; };
+		444444441D2D7A30B297B901 /* LiquidGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333331D2D7A30B297B901 /* LiquidGlass.swift */; };
+		44444444D87DB057C169B174 /* StatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333D87DB057C169B174 /* StatusBadgeView.swift */; };
+		444444449F423CBF025CA8BF /* MenuBarPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333339F423CBF025CA8BF /* MenuBarPopupView.swift */; };
+		44444444B5C53546B4ADF689 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333B5C53546B4ADF689 /* SettingsView.swift */; };
+		44444444FDF16AD8B83CD913 /* SettingsWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333FDF16AD8B83CD913 /* SettingsWindowManager.swift */; };
+		55555555555555550000007D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000007D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		111111111111111100000008 /* SynologyPhotoSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SynologyPhotoSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		333333333333333300000064 /* RemoteMediaInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteMediaInventory.swift"; sourceTree = "<group>"; };
-		333333333333333300000065 /* PhotoTransferPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoTransferPlan.swift"; sourceTree = "<group>"; };
-		333333333333333300000066 /* SynologyPhotoSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyPhotoSyncApp.swift"; sourceTree = "<group>"; };
-		333333333333333300000067 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate.swift"; sourceTree = "<group>"; };
-		333333333333333300000068 /* SyncModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncModels.swift"; sourceTree = "<group>"; };
-		333333333333333300000069 /* SyncConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncConfig.swift"; sourceTree = "<group>"; };
-		33333333333333330000006A /* SynologyAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIModels.swift"; sourceTree = "<group>"; };
-		33333333333333330000006B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainHelper.swift"; sourceTree = "<group>"; };
-		33333333333333330000006C /* SyncDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncDatabase.swift"; sourceTree = "<group>"; };
-		33333333333333330000006D /* StreamingMultipartUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreamingMultipartUploader.swift"; sourceTree = "<group>"; };
-		33333333333333330000006E /* SynologyAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIClient.swift"; sourceTree = "<group>"; };
-		33333333333333330000006F /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncState.swift"; sourceTree = "<group>"; };
-		333333333333333300000070 /* SyncEngineActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncEngineActor.swift"; sourceTree = "<group>"; };
-		333333333333333300000071 /* PhotoLibraryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibraryMonitor.swift"; sourceTree = "<group>"; };
-		333333333333333300000072 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLogger.swift"; sourceTree = "<group>"; };
-		333333333333333300000073 /* FilenameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilenameSanitizer.swift"; sourceTree = "<group>"; };
-		333333333333333300000074 /* MenuBarPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarPopupView.swift"; sourceTree = "<group>"; };
-		333333333333333300000075 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
-		333333333333333300000076 /* SettingsWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsWindowManager.swift"; sourceTree = "<group>"; };
-		333333333333333300000077 /* StatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusBadgeView.swift"; sourceTree = "<group>"; };
-		333333333333333300000078 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CircularProgressView.swift"; sourceTree = "<group>"; };
-		333333333333333300000079 /* LiquidGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiquidGlass.swift"; sourceTree = "<group>"; };
-		33333333333333330000007A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
-		33333333333333330000007B /* SynologyPhotoSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SynologyPhotoSync.entitlements"; sourceTree = "<group>"; };
-		33333333333333330000007C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		333333330577BC2084358C58 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate.swift"; sourceTree = "<group>"; };
+		333333334040AA352A376087 /* SynologyPhotoSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyPhotoSyncApp.swift"; sourceTree = "<group>"; };
+		33333333860E79EA4EB4C16F /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLogger.swift"; sourceTree = "<group>"; };
+		3333333340035D6CE3070981 /* FilenameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilenameSanitizer.swift"; sourceTree = "<group>"; };
+		3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibraryMonitor.swift"; sourceTree = "<group>"; };
+		3333333366365A15462CD825 /* PhotoTransferPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoTransferPlan.swift"; sourceTree = "<group>"; };
+		33333333C55BFBD76DD77329 /* SyncEngineActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncEngineActor.swift"; sourceTree = "<group>"; };
+		3333333369EF2CCE29A7BA70 /* SyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncState.swift"; sourceTree = "<group>"; };
+		333333337D001CD486DC69A8 /* RemoteMediaInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteMediaInventory.swift"; sourceTree = "<group>"; };
+		333333335841FB769AF1FE2D /* SyncConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncConfig.swift"; sourceTree = "<group>"; };
+		333333331F31EE09E18D662F /* SyncModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncModels.swift"; sourceTree = "<group>"; };
+		33333333BB5D7EF080B738CA /* SynologyAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIModels.swift"; sourceTree = "<group>"; };
+		333333338EDE1242DB046126 /* StreamingMultipartUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreamingMultipartUploader.swift"; sourceTree = "<group>"; };
+		333333339E4707C0A40413E3 /* SynologyAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyAPIClient.swift"; sourceTree = "<group>"; };
+		33333333B208C9E60581AD6B /* TransferRetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferRetry.swift"; sourceTree = "<group>"; };
+		333333335819DC8C258722BA /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainHelper.swift"; sourceTree = "<group>"; };
+		333333339EEA0A29C677A5CB /* SyncDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncDatabase.swift"; sourceTree = "<group>"; };
+		3333333334AEBCF638A54606 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CircularProgressView.swift"; sourceTree = "<group>"; };
+		333333331D2D7A30B297B901 /* LiquidGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiquidGlass.swift"; sourceTree = "<group>"; };
+		33333333D87DB057C169B174 /* StatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusBadgeView.swift"; sourceTree = "<group>"; };
+		333333339F423CBF025CA8BF /* MenuBarPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarPopupView.swift"; sourceTree = "<group>"; };
+		33333333B5C53546B4ADF689 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
+		33333333FDF16AD8B83CD913 /* SettingsWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsWindowManager.swift"; sourceTree = "<group>"; };
+		33333333333333330000007B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		33333333333333330000007C /* SynologyPhotoSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SynologyPhotoSync.entitlements"; sourceTree = "<group>"; };
+		33333333333333330000007D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +107,8 @@
 		222222222222222200000002 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				333333333333333300000066 /* SynologyPhotoSyncApp.swift */,
-				333333333333333300000067 /* AppDelegate.swift */,
+				333333330577BC2084358C58 /* AppDelegate.swift */,
+				333333334040AA352A376087 /* SynologyPhotoSyncApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -114,10 +116,10 @@
 		222222222222222200000003 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				333333333333333300000064 /* RemoteMediaInventory.swift */,
-				333333333333333300000068 /* SyncModels.swift */,
-				333333333333333300000069 /* SyncConfig.swift */,
-				33333333333333330000006A /* SynologyAPIModels.swift */,
+				333333337D001CD486DC69A8 /* RemoteMediaInventory.swift */,
+				333333335841FB769AF1FE2D /* SyncConfig.swift */,
+				333333331F31EE09E18D662F /* SyncModels.swift */,
+				33333333BB5D7EF080B738CA /* SynologyAPIModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,8 +127,8 @@
 		222222222222222200000004 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				33333333333333330000006B /* KeychainHelper.swift */,
-				33333333333333330000006C /* SyncDatabase.swift */,
+				333333335819DC8C258722BA /* KeychainHelper.swift */,
+				333333339EEA0A29C677A5CB /* SyncDatabase.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -134,8 +136,9 @@
 		222222222222222200000005 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				33333333333333330000006D /* StreamingMultipartUploader.swift */,
-				33333333333333330000006E /* SynologyAPIClient.swift */,
+				333333338EDE1242DB046126 /* StreamingMultipartUploader.swift */,
+				333333339E4707C0A40413E3 /* SynologyAPIClient.swift */,
+				33333333B208C9E60581AD6B /* TransferRetry.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -143,12 +146,12 @@
 		222222222222222200000006 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				333333333333333300000065 /* PhotoTransferPlan.swift */,
-				33333333333333330000006F /* SyncState.swift */,
-				333333333333333300000070 /* SyncEngineActor.swift */,
-				333333333333333300000071 /* PhotoLibraryMonitor.swift */,
-				333333333333333300000072 /* AppLogger.swift */,
-				333333333333333300000073 /* FilenameSanitizer.swift */,
+				33333333860E79EA4EB4C16F /* AppLogger.swift */,
+				3333333340035D6CE3070981 /* FilenameSanitizer.swift */,
+				3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */,
+				3333333366365A15462CD825 /* PhotoTransferPlan.swift */,
+				33333333C55BFBD76DD77329 /* SyncEngineActor.swift */,
+				3333333369EF2CCE29A7BA70 /* SyncState.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -156,9 +159,9 @@
 		222222222222222200000007 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				333333333333333300000074 /* MenuBarPopupView.swift */,
-				333333333333333300000075 /* SettingsView.swift */,
-				333333333333333300000076 /* SettingsWindowManager.swift */,
+				333333339F423CBF025CA8BF /* MenuBarPopupView.swift */,
+				33333333B5C53546B4ADF689 /* SettingsView.swift */,
+				33333333FDF16AD8B83CD913 /* SettingsWindowManager.swift */,
 				222222222222222200000008 /* Components */,
 			);
 			path = Views;
@@ -167,9 +170,9 @@
 		222222222222222200000008 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				333333333333333300000077 /* StatusBadgeView.swift */,
-				333333333333333300000078 /* CircularProgressView.swift */,
-				333333333333333300000079 /* LiquidGlass.swift */,
+				3333333334AEBCF638A54606 /* CircularProgressView.swift */,
+				333333331D2D7A30B297B901 /* LiquidGlass.swift */,
+				33333333D87DB057C169B174 /* StatusBadgeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -177,9 +180,9 @@
 		222222222222222200000009 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				33333333333333330000007A /* Info.plist */,
-				33333333333333330000007B /* SynologyPhotoSync.entitlements */,
-				33333333333333330000007C /* Assets.xcassets */,
+				33333333333333330000007B /* Info.plist */,
+				33333333333333330000007C /* SynologyPhotoSync.entitlements */,
+				33333333333333330000007D /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -237,7 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55555555555555550000007C /* Assets.xcassets in Resources */,
+				55555555555555550000007D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,28 +251,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				444444444444444400000064 /* RemoteMediaInventory.swift in Sources */,
-				444444444444444400000065 /* PhotoTransferPlan.swift in Sources */,
-				444444444444444400000066 /* SynologyPhotoSyncApp.swift in Sources */,
-				444444444444444400000067 /* AppDelegate.swift in Sources */,
-				444444444444444400000068 /* SyncModels.swift in Sources */,
-				444444444444444400000069 /* SyncConfig.swift in Sources */,
-				44444444444444440000006A /* SynologyAPIModels.swift in Sources */,
-				44444444444444440000006B /* KeychainHelper.swift in Sources */,
-				44444444444444440000006C /* SyncDatabase.swift in Sources */,
-				44444444444444440000006D /* StreamingMultipartUploader.swift in Sources */,
-				44444444444444440000006E /* SynologyAPIClient.swift in Sources */,
-				44444444444444440000006F /* SyncState.swift in Sources */,
-				444444444444444400000070 /* SyncEngineActor.swift in Sources */,
-				444444444444444400000071 /* PhotoLibraryMonitor.swift in Sources */,
-				444444444444444400000072 /* AppLogger.swift in Sources */,
-				444444444444444400000073 /* FilenameSanitizer.swift in Sources */,
-				444444444444444400000074 /* MenuBarPopupView.swift in Sources */,
-				444444444444444400000075 /* SettingsView.swift in Sources */,
-				444444444444444400000076 /* SettingsWindowManager.swift in Sources */,
-				444444444444444400000077 /* StatusBadgeView.swift in Sources */,
-				444444444444444400000078 /* CircularProgressView.swift in Sources */,
-				444444444444444400000079 /* LiquidGlass.swift in Sources */,
+				444444440577BC2084358C58 /* AppDelegate.swift in Sources */,
+				444444444040AA352A376087 /* SynologyPhotoSyncApp.swift in Sources */,
+				44444444860E79EA4EB4C16F /* AppLogger.swift in Sources */,
+				4444444440035D6CE3070981 /* FilenameSanitizer.swift in Sources */,
+				4444444460F3CA63DCA55407 /* PhotoLibraryMonitor.swift in Sources */,
+				4444444466365A15462CD825 /* PhotoTransferPlan.swift in Sources */,
+				44444444C55BFBD76DD77329 /* SyncEngineActor.swift in Sources */,
+				4444444469EF2CCE29A7BA70 /* SyncState.swift in Sources */,
+				444444447D001CD486DC69A8 /* RemoteMediaInventory.swift in Sources */,
+				444444445841FB769AF1FE2D /* SyncConfig.swift in Sources */,
+				444444441F31EE09E18D662F /* SyncModels.swift in Sources */,
+				44444444BB5D7EF080B738CA /* SynologyAPIModels.swift in Sources */,
+				444444448EDE1242DB046126 /* StreamingMultipartUploader.swift in Sources */,
+				444444449E4707C0A40413E3 /* SynologyAPIClient.swift in Sources */,
+				44444444B208C9E60581AD6B /* TransferRetry.swift in Sources */,
+				444444445819DC8C258722BA /* KeychainHelper.swift in Sources */,
+				444444449EEA0A29C677A5CB /* SyncDatabase.swift in Sources */,
+				4444444434AEBCF638A54606 /* CircularProgressView.swift in Sources */,
+				444444441D2D7A30B297B901 /* LiquidGlass.swift in Sources */,
+				44444444D87DB057C169B174 /* StatusBadgeView.swift in Sources */,
+				444444449F423CBF025CA8BF /* MenuBarPopupView.swift in Sources */,
+				44444444B5C53546B4ADF689 /* SettingsView.swift in Sources */,
+				44444444FDF16AD8B83CD913 /* SettingsWindowManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,7 +411,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -415,7 +419,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -435,7 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -443,7 +447,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

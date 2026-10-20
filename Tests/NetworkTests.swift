@@ -3,15 +3,28 @@ import XCTest
 @testable import SynologyPhotoSync
 
 private final class MockProtocol: URLProtocol, @unchecked Sendable {
-  static let lock = NSLock()
-  static var handler: ((URLRequest) throws -> (Int, String))?
+  private final class Storage: @unchecked Sendable {
+    let lock = NSLock()
+    var handler: ((URLRequest) throws -> (Int, String))?
+  }
+  private static let storage = Storage()
+  static var handler: ((URLRequest) throws -> (Int, String))? {
+    get {
+      storage.lock.lock()
+      defer { storage.lock.unlock() }
+      return storage.handler
+    }
+    set {
+      storage.lock.lock()
+      defer { storage.lock.unlock() }
+      storage.handler = newValue
+    }
+  }
   override class func canInit(with request: URLRequest) -> Bool { true }
   override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
   override func startLoading() {
     do {
-      Self.lock.lock()
       let handler = Self.handler
-      Self.lock.unlock()
       let (code, body) = try XCTUnwrap(handler)(request)
       let response = HTTPURLResponse(
         url: request.url!, statusCode: code, httpVersion: "HTTP/1.1",
@@ -26,17 +39,13 @@ private final class MockProtocol: URLProtocol, @unchecked Sendable {
 
 final class NetworkTests: XCTestCase {
   override func tearDown() {
-    MockProtocol.lock.lock()
     MockProtocol.handler = nil
-    MockProtocol.lock.unlock()
     super.tearDown()
   }
 
   private func client(handler: @escaping (URLRequest) throws -> (Int, String)) -> SynologyAPIClient
   {
-    MockProtocol.lock.lock()
     MockProtocol.handler = handler
-    MockProtocol.lock.unlock()
     let config = URLSessionConfiguration.ephemeral
     config.protocolClasses = [MockProtocol.self]
     return SynologyAPIClient(
@@ -61,6 +70,30 @@ final class NetworkTests: XCTestCase {
       serverURL: "https://nas.example", username: "test-user", password: "secret+&")
     XCTAssertEqual(result.serverName, "nas.example")
     XCTAssertEqual(paths, ["/webapi/auth.cgi", "/webapi/entry.cgi"])
+  }
+
+  func testInterruptedAPIRequestRecoversWithoutReplacingSession() async throws {
+    var logins = 0
+    var requests = 0
+    let api = client { request in
+      if request.url!.path.hasSuffix("auth.cgi") {
+        logins += 1
+        return (200, #"{"success":true,"data":{"sid":"same-session"}}"#)
+      }
+      requests += 1
+      XCTAssertEqual(request.value(forHTTPHeaderField: "Cookie"), "id=same-session")
+      if requests == 1 { throw URLError(.networkConnectionLost) }
+      if requests > 2 { return (200, #"{"success":true,"data":{"list":[],"total":1}}"#) }
+      return (200, #"{"success":true,"data":{"list":[{"id":8,"name":"Recovered"}],"total":1}}"#)
+    }
+    let albums = try await TransferRetry.run(
+      checkpoint: {}, wait: { _, _ in }, onRetry: { _, _ in },
+      operation: {
+        try await api.listAlbums(allowInsecureSSL: false)
+      })
+    XCTAssertEqual(albums.map(\.id), [8])
+    XCTAssertEqual(logins, 1)
+    XCTAssertEqual(requests, 2)  // The declared total completes the successful album page.
   }
 
   func testConnectionRejectsPhotosAPIFailure() async {

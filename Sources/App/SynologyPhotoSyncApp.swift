@@ -27,6 +27,8 @@ struct SynologyPhotoSyncApp: App {
   private var menuBarIcon: String {
     if syncState.isPaused {
       return "pause.circle.fill"
+    } else if syncState.currentStage == .waitingForNetwork {
+      return "wifi.exclamationmark"
     } else if syncState.isSyncing {
       return "arrow.triangle.2.circlepath.circle.fill"
     } else if case .failed = syncState.connectionStatus {
