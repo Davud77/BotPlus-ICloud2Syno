@@ -3,7 +3,10 @@ import Foundation
 
 /// Персистентная база данных синхронизации (хранение маппинга идентификаторов, истории и лога ошибок)
 public final class SyncDatabase: @unchecked Sendable {
-  public static let shared = SyncDatabase()
+  public static let shared = SyncDatabase(
+    fileURL: BuildEnvironment.isScreenshotPreview
+      ? FileManager.default.temporaryDirectory.appendingPathComponent(
+        "SynologyPhotoSync-Preview-\(UUID().uuidString)/state.json") : nil)
 
   private struct DatabaseState: Codable {
     var resourceMappings: [String: [String: Int]] = [:]

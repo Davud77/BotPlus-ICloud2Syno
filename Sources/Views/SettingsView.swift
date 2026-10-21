@@ -19,7 +19,9 @@ public final class SettingsViewModel: ObservableObject {
   @Published public var showCopiedAlert: Bool = false
 
   public init() {
-    if let savedPassword = KeychainHelper.shared.getPassword() {
+    if !BuildEnvironment.isScreenshotPreview,
+      let savedPassword = KeychainHelper.shared.getPassword()
+    {
       self.passwordInput = savedPassword
     }
   }
@@ -114,39 +116,50 @@ public struct SettingsView: View {
   @ObservedObject private var syncState = SyncState.shared
   @ObservedObject private var logger = AppLogger.shared
   @StateObject private var vm = SettingsViewModel()
+  @ObservedObject private var updates = UpdateManager.shared
 
   public init() {}
 
   public var body: some View {
-    TabView {
-      serverTab
-        .tabItem {
-          Label("Сервер Synology", systemImage: "server.rack")
-        }
+    VStack(spacing: 12) {
+      TabView {
+        serverTab
+          .tabItem {
+            Label("Сервер Synology", systemImage: "server.rack")
+          }
 
-      libraryTab
-        .disabled(syncState.isSyncing || vm.isTestingConnection)
-        .tabItem {
-          Label("Медиатека и Качество", systemImage: "photo.on.rectangle.angled")
-        }
+        libraryTab
+          .disabled(syncState.isSyncing || vm.isTestingConnection)
+          .tabItem {
+            Label("Медиатека и Качество", systemImage: "photo.on.rectangle.angled")
+          }
 
-      albumsTab
-        .disabled(syncState.isSyncing || vm.isTestingConnection)
-        .tabItem {
-          Label("Альбомы", systemImage: "rectangle.stack")
-        }
+        albumsTab
+          .disabled(syncState.isSyncing || vm.isTestingConnection)
+          .tabItem {
+            Label("Альбомы", systemImage: "rectangle.stack")
+          }
 
-      systemTab
-        .tabItem {
-          Label("Система", systemImage: "gearshape")
-        }
+        systemTab
+          .tabItem {
+            Label("Система", systemImage: "gearshape")
+          }
 
-      logsTab
-        .tabItem {
-          Label("Логи", systemImage: "doc.text")
-        }
+        logsTab
+          .tabItem {
+            Label("Логи", systemImage: "doc.text")
+          }
+      }
+      HStack(spacing: 8) {
+        Image(nsImage: NSImage(named: NSImage.applicationIconName) ?? NSImage())
+          .resizable().frame(width: 28, height: 28)
+        Text("SynologyPhotoSync").font(.system(size: 12, weight: .medium))
+        Spacer()
+        Text(AppVersion.current.display).font(.system(size: 12)).foregroundStyle(.secondary)
+      }
+      .padding(.horizontal, 8)
     }
-    .frame(width: 590, height: 570)
+    .frame(width: 650, height: 620)
     .padding(16)
     .liquidGlassBackground(material: .underWindowBackground)
     .onAppear {
@@ -154,9 +167,6 @@ public struct SettingsView: View {
       NSApp.activate(ignoringOtherApps: true)
       monitor.checkAuthorization()
       monitor.loadAvailableAlbums()
-    }
-    .onDisappear {
-      NSApp.setActivationPolicy(.accessory)
     }
   }
 
@@ -455,6 +465,26 @@ public struct SettingsView: View {
 
   private var systemTab: some View {
     Form {
+      Section(header: Text("Приложение и обновления").font(.headline)) {
+        LabeledContent("SynologyPhotoSync", value: AppVersion.current.display)
+        HStack {
+          Button("Проверить обновления…") { updates.checkForUpdates() }
+            .disabled(!updates.canCheck || syncState.isSyncing || updates.isInstallationPending)
+          Spacer()
+          Link(
+            "Все релизы",
+            destination: URL(string: "https://github.com/Davud77/BotPlus-ICloud2Syno/releases")!)
+        }
+        Text(updates.status).font(.caption).foregroundStyle(.secondary)
+        if let date = updates.lastChecked {
+          Text("Последняя проверка: \(date.formatted(date: .abbreviated, time: .shortened))")
+            .font(.caption).foregroundStyle(.secondary)
+        }
+        if syncState.isSyncing {
+          Text("Проверка доступна после завершения или остановки синхронизации.")
+            .font(.caption).foregroundStyle(.secondary)
+        }
+      }
       Section(header: Text("Автозапуск").font(.headline)) {
         Toggle(
           "Запускать при входе в систему",

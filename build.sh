@@ -16,6 +16,8 @@ appPath="$buildRoot/Build/Products/Release/SynologyPhotoSync.app"
 /usr/bin/codesign --verify --deep --strict "$appPath"
 mkdir -p build_output
 /usr/bin/ditto -c -k --keepParent "$appPath" build_output/SynologyPhotoSync.zip
+version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$appPath/Contents/Info.plist")
+cp build_output/SynologyPhotoSync.zip "build_output/SynologyPhotoSync-$version-arm64.zip"
 echo "Приложение: $appPath"
 echo "Архив: $(pwd)/build_output/SynologyPhotoSync.zip"
 

@@ -27,6 +27,10 @@ public final class PhotoLibraryMonitor: NSObject, ObservableObject, PHPhotoLibra
   // MARK: - Авторизация PhotoKit
 
   public func checkAuthorization() {
+    if BuildEnvironment.isScreenshotPreview {
+      authorizationStatus = .authorized
+      return
+    }
     self.authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
     if self.authorizationStatus == .authorized || self.authorizationStatus == .limited {
       registerObserver()
@@ -80,6 +84,12 @@ public final class PhotoLibraryMonitor: NSObject, ObservableObject, PHPhotoLibra
   // MARK: - Загрузка списка альбомов из Apple Photos
 
   public func loadAvailableAlbums() {
+    if BuildEnvironment.isScreenshotPreview {
+      availableAlbums = [
+        AlbumInfo(id: "demo", title: "Путешествия", assetCount: 240, isCloudShared: false)
+      ]
+      return
+    }
     albumLoadTask?.cancel()
     albumLoadTask = Task {
       let albums = await Task.detached(priority: .utility) { Self.fetchAvailableAlbums() }.value
@@ -204,7 +214,14 @@ public final class PhotoLibraryMonitor: NSObject, ObservableObject, PHPhotoLibra
 
   // MARK: - Управление процессом синхронизации
 
+  public func suspendAutomaticSyncForUpdate() {
+    automaticSyncSuspended = true
+    pendingChanges = false
+  }
+
   public func startSync() {
+    guard !BuildEnvironment.isScreenshotPreview else { return }
+    guard !UpdateManager.shared.isInstallationPending else { return }
     guard authorizationStatus == .authorized || authorizationStatus == .limited else {
       Task {
         let granted = await requestAuthorization()

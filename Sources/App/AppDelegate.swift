@@ -6,10 +6,17 @@ public final class AppDelegate: NSObject, NSApplicationDelegate {
     // Dock and menu bar remain available throughout synchronization.
     NSApp.setActivationPolicy(.regular)
 
-    // Инициализируем проверку прав доступа к медиатеке в фоне
-    Task { @MainActor in
-      PhotoLibraryMonitor.shared.checkAuthorization()
-    }
+    UpdateManager.shared.start()
+
+    #if SCREENSHOT_PREVIEW
+      ScreenshotPreview.prepare()
+      SettingsWindowManager.shared.showSettings()
+    #else
+      // Инициализируем проверку прав доступа к медиатеке в фоне
+      Task { @MainActor in
+        PhotoLibraryMonitor.shared.checkAuthorization()
+      }
+    #endif
   }
 
   public func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool)

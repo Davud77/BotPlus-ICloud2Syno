@@ -32,7 +32,7 @@ public final class SettingsWindowManager: NSObject, NSWindowDelegate {
     newWindow.isOpaque = false
     newWindow.backgroundColor = .clear
     newWindow.hasShadow = true
-    newWindow.setContentSize(NSSize(width: 590, height: 570))
+    newWindow.setContentSize(NSSize(width: 682, height: 652))
     newWindow.center()
     newWindow.isReleasedWhenClosed = false
     newWindow.delegate = self

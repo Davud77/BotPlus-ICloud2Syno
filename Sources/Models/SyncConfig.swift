@@ -4,7 +4,7 @@ import Foundation
 public final class SyncConfig: ObservableObject, @unchecked Sendable {
   public static let shared = SyncConfig()
 
-  private let defaults = UserDefaults.standard
+  private let defaults: UserDefaults
 
   // Ключи UserDefaults
   private enum Keys {
@@ -25,7 +25,15 @@ public final class SyncConfig: ObservableObject, @unchecked Sendable {
   }
 
   private init() {
+    defaults =
+      BuildEnvironment.isScreenshotPreview
+      ? UserDefaults(suiteName: "com.synologyphotosync.screenshots")! : .standard
     registerDefaults()
+    if BuildEnvironment.isScreenshotPreview {
+      defaults.register(defaults: [
+        Keys.serverURL: "https://nas.example.com", Keys.username: "demo",
+      ])
+    }
   }
 
   private func registerDefaults() {
