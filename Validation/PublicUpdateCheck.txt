@@ -1,0 +1,15 @@
+Public verification — 21 October 2026
+
+Latest GitHub release: v1.4.0, published, not draft.
+Canonical SUFeedURL returned exactly the signed appcast.xml bytes.
+Versioned ZIP from the enclosure URL: size and SHA-256 match the signed local archive.
+DMG download: SHA-256 matches the verified local DMG.
+README icon and both screenshot URLs: HTTP 200.
+
+ZIP SHA-256: 11c03a710d708c6394b2114892535c097411b93e5cdaf7de9a4c15b9f44da1ac
+DMG SHA-256: 3803d3cc1db340c97d00671b1c13e655861b7b777e188f8b6cd75d8f11b5d527
+
+UI verification in isolated screenshot build:
+Settings displays version 1.4.0 (5).
+Check for Updates displayed: “You’re up to date! SynologyPhotoSync 1.4.0 is currently the newest version available.”
+No installation was requested by this UI check.
