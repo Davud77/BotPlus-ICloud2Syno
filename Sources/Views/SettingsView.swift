@@ -485,6 +485,16 @@ public struct SettingsView: View {
             .font(.caption).foregroundStyle(.secondary)
         }
       }
+      Section(header: Text("Параллельные передачи").font(.headline)) {
+        Stepper(value: $config.parallelTransfers, in: BoundedTransferQueue.limits) {
+          Text("Количество параллельных загрузок: \(config.parallelTransfers)")
+        }
+        .disabled(syncState.isSyncing)
+        Text(
+          "Одновременно скачиваются из iCloud и выгружаются на NAS до \(config.parallelTransfers) файлов. Настройка применяется к следующему запуску."
+        )
+        .font(.caption).foregroundStyle(.secondary)
+      }
       Section(header: Text("Автозапуск").font(.headline)) {
         Toggle(
           "Запускать при входе в систему",

@@ -8,6 +8,7 @@ public final class SyncConfig: ObservableObject, @unchecked Sendable {
 
   // Ключи UserDefaults
   private enum Keys {
+    static let parallelTransfers = "sync_parallel_transfers"
     static let serverURL = "sync_server_url"
     static let username = "sync_username"
     static let libraryScope = "sync_library_scope"
@@ -24,10 +25,11 @@ public final class SyncConfig: ObservableObject, @unchecked Sendable {
     static let lastKnownSessionId = "sync_last_session_id"
   }
 
-  private init() {
+  init(defaults suppliedDefaults: UserDefaults? = nil) {
     defaults =
-      BuildEnvironment.isScreenshotPreview
-      ? UserDefaults(suiteName: "com.synologyphotosync.screenshots")! : .standard
+      suppliedDefaults
+      ?? (BuildEnvironment.isScreenshotPreview
+        ? UserDefaults(suiteName: "com.synologyphotosync.screenshots")! : .standard)
     registerDefaults()
     if BuildEnvironment.isScreenshotPreview {
       defaults.register(defaults: [
@@ -38,6 +40,7 @@ public final class SyncConfig: ObservableObject, @unchecked Sendable {
 
   private func registerDefaults() {
     defaults.register(defaults: [
+      Keys.parallelTransfers: BoundedTransferQueue.defaultLimit,
       Keys.serverURL: "https://",
       Keys.username: "",
       Keys.libraryScope: LibraryScope.both.rawValue,
@@ -56,6 +59,14 @@ public final class SyncConfig: ObservableObject, @unchecked Sendable {
   }
 
   // MARK: - Публичные свойства с уведомлением ObservableObject
+
+  public var parallelTransfers: Int {
+    get { BoundedTransferQueue.clamped(defaults.integer(forKey: Keys.parallelTransfers)) }
+    set {
+      objectWillChange.send()
+      defaults.set(BoundedTransferQueue.clamped(newValue), forKey: Keys.parallelTransfers)
+    }
+  }
 
   public var serverURL: String {
     get { defaults.string(forKey: Keys.serverURL) ?? "https://" }

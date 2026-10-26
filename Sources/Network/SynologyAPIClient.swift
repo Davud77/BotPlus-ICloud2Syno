@@ -7,6 +7,7 @@ public actor SynologyAPIClient {
   private let configuration: URLSessionConfiguration
   private let persistSessions: Bool
   private let credentials: @Sendable () -> (server: String, username: String, password: String?)
+  private var pendingLogins: [String: Task<String, Error>] = [:]
   private var requestSessions: [String: URLSession] = [:]
   private var sessions: [String: String] = [:]
 
@@ -57,6 +58,7 @@ public actor SynologyAPIClient {
     let key = "\(insecure)-\(upload)"
     if let existing = requestSessions[key] { return existing }
     let config = configuration.copy() as! URLSessionConfiguration
+    config.httpMaximumConnectionsPerHost = BoundedTransferQueue.limits.upperBound
     config.timeoutIntervalForRequest = upload ? 300 : 30
     config.timeoutIntervalForResource = upload ? 3600 : 60
     config.urlCache = nil
@@ -182,31 +184,46 @@ public actor SynologyAPIClient {
     return auth.sid
   }
 
-  private func session(insecure: Bool, refresh: Bool = false) async throws -> String {
+  private func session(insecure: Bool, rejectedSID: String? = nil) async throws -> String {
+    try Task.checkCancellation()
     let config = credentials()
     let key = try sessionKey(server: config.server, username: config.username, insecure: insecure)
-    if !refresh,
-      let sid = sessions[key] ?? (persistSessions ? KeychainHelper.shared.get(key: key) : nil)
+    if let pending = pendingLogins[key] {
+      let sid = try await pending.value
+      try Task.checkCancellation()
+      return sid
+    }
+    if let sid = sessions[key] ?? (persistSessions ? KeychainHelper.shared.get(key: key) : nil),
+      sid != rejectedSID
     {
       return sid
     }
     guard let password = config.password, !password.isEmpty else {
       throw SynologyError.invalidCredentials
     }
-    return try await login(
-      serverURL: config.server, username: config.username, password: password,
-      allowInsecureSSL: insecure)
+    let login = Task {
+      try await self.login(
+        serverURL: config.server, username: config.username, password: password,
+        allowInsecureSSL: insecure)
+    }
+    pendingLogins[key] = login
+    defer { pendingLogins[key] = nil }
+    let sid = try await login.value
+    try Task.checkCancellation()
+    return sid
   }
 
   private func authenticated<T: Decodable>(fields: [(String, String)], insecure: Bool) async throws
     -> T
   {
+    var rejectedSID: String?
     for attempt in 0...1 {
-      let sid = try await session(insecure: insecure, refresh: attempt > 0)
+      let sid = try await session(insecure: insecure, rejectedSID: rejectedSID)
       do {
         return try await request(
           server: credentials().server, fields: fields, insecure: insecure, sessionID: sid)
       } catch SynologyError.sessionExpired where attempt == 0 {
+        rejectedSID = sid
         await reportSessionRefresh()
         continue
       }
@@ -249,8 +266,9 @@ public actor SynologyAPIClient {
     guard let url = buildURL(baseURL: credentials().server, endpoint: "webapi/entry.cgi") else {
       throw SynologyError.invalidURL
     }
+    var rejectedSID: String?
     for attempt in 0...1 {
-      let sid = try await session(insecure: allowInsecureSSL, refresh: attempt > 0)
+      let sid = try await session(insecure: allowInsecureSSL, rejectedSID: rejectedSID)
       let fields = try Self.uploadParameters(
         filename: filename, creationDate: creationDate, targetSpace: targetSpace)
       let uploader = StreamingMultipartUploader()
@@ -271,6 +289,7 @@ public actor SynologyAPIClient {
         }
         return id
       } catch SynologyError.sessionExpired where attempt == 0 {
+        rejectedSID = sid
         await reportSessionRefresh()
         continue
       }
@@ -351,9 +370,10 @@ public actor SynologyAPIClient {
     guard let url = buildURL(baseURL: credentials().server, endpoint: "webapi/entry.cgi") else {
       throw SynologyError.invalidURL
     }
+    var rejectedSID: String?
     for attempt in 0...1 {
       try Task.checkCancellation()
-      let sid = try await session(insecure: allowInsecureSSL, refresh: attempt > 0)
+      let sid = try await session(insecure: allowInsecureSSL, rejectedSID: rejectedSID)
       var request = URLRequest(url: url)
       request.httpMethod = "POST"
       request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -376,6 +396,7 @@ public actor SynologyAPIClient {
         do {
           let _: SynologyUploadData = try Self.decodeResponse(SynologyUploadData.self, data: data)
         } catch SynologyError.sessionExpired where attempt == 0 {
+          rejectedSID = sid
           await reportSessionRefresh()
           continue
         }

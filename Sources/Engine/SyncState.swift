@@ -55,6 +55,11 @@ public final class SyncState: ObservableObject {
   @Published public var recentHistory: [SyncHistoryItem] = []
   @Published public var failedItems: [SyncErrorItem] = []
 
+  @Published private(set) var activeTransfers: [ActiveTransfer] = []
+  private var networkWaiters = Set<UUID>()
+  private var waitingTransfers: [UUID: UUID] = [:]
+  private static let legacyWaitID = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
+
   private var stageBeforePause: SyncStage = .scanning
   private var stageBeforeNetworkWait: SyncStage?
   private var connectionBeforeNetworkWait: ConnectionStatus?
@@ -76,6 +81,9 @@ public final class SyncState: ObservableObject {
   }
 
   public func startNewSession(totalFiles: Int, totalAlbums: Int) {
+    self.activeTransfers.removeAll()
+    self.networkWaiters.removeAll()
+    self.waitingTransfers.removeAll()
     self.stageBeforeNetworkWait = nil
     self.connectionBeforeNetworkWait = nil
     self.isReconciling = true
@@ -125,6 +133,62 @@ public final class SyncState: ObservableObject {
     reloadFromDatabase()
   }
 
+  func beginTransfer(id: UUID, filename: String) {
+    guard isSyncing, currentStage != .cancelling, currentStage != .cancelled else { return }
+    activeTransfers.append(
+      ActiveTransfer(id: id, revision: UUID(), filename: filename, stage: .downloadingFromICloud))
+    publishActiveTransfer()
+  }
+
+  func setTransferFile(id: UUID, revision: UUID, name: String, stage: SyncStage) {
+    guard let index = activeTransfers.firstIndex(where: { $0.id == id }),
+      currentStage != .cancelling
+    else { return }
+    activeTransfers[index] = ActiveTransfer(
+      id: id, revision: revision, filename: name, stage: stage,
+      downloadProgress: stage == .uploadingToSynology ? 1 : 0)
+    publishActiveTransfer()
+  }
+
+  func updateTransfer(
+    id: UUID, revision: UUID, download: Double? = nil, upload: UploadProgressInfo? = nil
+  ) {
+    guard currentStage != .cancelling, currentStage != .cancelled,
+      let index = activeTransfers.firstIndex(where: { $0.id == id && $0.revision == revision })
+    else { return }
+    if let download, activeTransfers[index].stage == .downloadingFromICloud {
+      activeTransfers[index].downloadProgress = min(1, max(0, download))
+    }
+    if let upload, activeTransfers[index].stage == .uploadingToSynology {
+      activeTransfers[index].uploadProgress = upload.fractionCompleted
+      activeTransfers[index].bytesText = upload.formattedText
+      activeTransfers[index].speedText = upload.speedText
+    }
+    publishActiveTransfer()
+  }
+
+  func endTransfer(id: UUID) {
+    activeTransfers.removeAll { $0.id == id }
+    publishActiveTransfer()
+  }
+
+  private func publishActiveTransfer() {
+    guard let first = activeTransfers.first else {
+      currentFileName = ""
+      iCloudDownloadProgress = 0
+      synologyUploadProgress = 0
+      uploadProgressBytesText = ""
+      uploadSpeedText = ""
+      return
+    }
+    currentFileName = first.filename
+    iCloudDownloadProgress = first.downloadProgress
+    synologyUploadProgress = first.uploadProgress
+    uploadProgressBytesText = first.bytesText
+    uploadSpeedText = first.waitingForNetwork || isPaused ? "" : first.speedText
+    setStage(first.stage)
+  }
+
   public func setCurrentFile(name: String, stage: SyncStage) {
     self.currentFileName = name
     setStage(stage)
@@ -153,11 +217,13 @@ public final class SyncState: ObservableObject {
     AppLogger.shared.success(
       "Выгружен: '\(historyItem.filename)' (\(ByteCountFormatter.string(fromByteCount: historyItem.sizeBytes, countStyle: .file)))"
     )
-    self.currentFileName = ""
-    self.iCloudDownloadProgress = 0.0
-    self.synologyUploadProgress = 0.0
-    self.uploadProgressBytesText = ""
-    self.uploadSpeedText = ""
+    if activeTransfers.isEmpty {
+      self.currentFileName = ""
+      self.iCloudDownloadProgress = 0
+      self.synologyUploadProgress = 0
+      self.uploadProgressBytesText = ""
+      self.uploadSpeedText = ""
+    }
   }
 
   public func markFileFailed(errorItem: SyncErrorItem, isAlbum: Bool = false) {
@@ -185,12 +251,21 @@ public final class SyncState: ObservableObject {
 
   public func setStage(_ stage: SyncStage) {
     guard currentStage != .cancelling && currentStage != .cancelled else { return }
-    stageBeforePause = stage
-    currentStage = isPaused ? .paused : stage
+    let effective = networkWaiters.isEmpty ? stage : .waitingForNetwork
+    stageBeforePause = effective
+    currentStage = isPaused ? .paused : effective
   }
 
-  public func beginNetworkWait() {
+  public func beginNetworkWait(operationID: UUID? = nil, transferID: UUID? = nil) {
     guard isSyncing, currentStage != .cancelling, currentStage != .cancelled else { return }
+    let id = operationID ?? Self.legacyWaitID
+    networkWaiters.insert(id)
+    if let transferID {
+      waitingTransfers[id] = transferID
+      if let index = activeTransfers.firstIndex(where: { $0.id == transferID }) {
+        activeTransfers[index].waitingForNetwork = true
+      }
+    }
     if stageBeforeNetworkWait == nil {
       stageBeforeNetworkWait = isPaused ? stageBeforePause : currentStage
       connectionBeforeNetworkWait = connectionStatus
@@ -200,7 +275,16 @@ public final class SyncState: ObservableObject {
     uploadSpeedText = ""
   }
 
-  public func endNetworkWait() {
+  public func endNetworkWait(operationID: UUID? = nil) {
+    let id = operationID ?? Self.legacyWaitID
+    guard networkWaiters.remove(id) != nil else { return }
+    if let transferID = waitingTransfers.removeValue(forKey: id),
+      !waitingTransfers.values.contains(transferID),
+      let index = activeTransfers.firstIndex(where: { $0.id == transferID })
+    {
+      activeTransfers[index].waitingForNetwork = false
+    }
+    guard networkWaiters.isEmpty else { return }
     guard let previous = stageBeforeNetworkWait else { return }
     stageBeforeNetworkWait = nil
     if currentStage != .cancelling && currentStage != .cancelled,
@@ -209,7 +293,7 @@ public final class SyncState: ObservableObject {
       connectionStatus = connection
     }
     connectionBeforeNetworkWait = nil
-    setStage(previous)
+    setStage(activeTransfers.first?.stage ?? previous)
   }
 
   public func noteWarning() {
@@ -243,7 +327,11 @@ public final class SyncState: ObservableObject {
       return
     }
     let wasCancelled = cancelled || currentStage == .cancelling
-    let incomplete = remainingCount > 0 || processedAlbumsCount < totalAlbumsCount
+    let incomplete =
+      remainingCount > 0 || processedAlbumsCount < totalAlbumsCount || !activeTransfers.isEmpty
+    activeTransfers.removeAll()
+    networkWaiters.removeAll()
+    waitingTransfers.removeAll()
     isSyncing = false
     isReconciling = false
     isPaused = false

@@ -1,7 +1,7 @@
 import Foundation
 import Photos
 
-/// One serial owner for reconciliation, extraction and upload; no parallel media exports.
+/// Owns reconciliation and a bounded set of concurrent asset pipelines. Live Photo parts remain ordered.
 public actor SyncEngineActor {
   private var isPaused = false
   private var confirmedResources: [String: [String: SynologyMediaItem]] = [:]
@@ -21,7 +21,10 @@ public actor SyncEngineActor {
     }
   }
 
-  private func recovering<T>(_ operation: () async throws -> T) async throws -> T {
+  private func recovering<T>(transferID: UUID? = nil, _ operation: () async throws -> T)
+    async throws -> T
+  {
+    let operationID = UUID()
     do {
       let result = try await TransferRetry.run(
         checkpoint: { try await self.waitUntilReady() },
@@ -32,7 +35,9 @@ public actor SyncEngineActor {
         },
         onRetry: { error, network in
           await MainActor.run {
-            if network { SyncState.shared.beginNetworkWait() }
+            if network {
+              SyncState.shared.beginNetworkWait(operationID: operationID, transferID: transferID)
+            }
             AppLogger.shared.warning(
               network
                 ? "Связь прервана. Синхронизация продолжится автоматически; пауза и отмена сохраняют приоритет."
@@ -40,10 +45,10 @@ public actor SyncEngineActor {
               details: TransferRetry.message(for: error))
           }
         }, operation: operation)
-      await MainActor.run { SyncState.shared.endNetworkWait() }
+      await MainActor.run { SyncState.shared.endNetworkWait(operationID: operationID) }
       return result
     } catch {
-      await MainActor.run { SyncState.shared.endNetworkWait() }
+      await MainActor.run { SyncState.shared.endNetworkWait(operationID: operationID) }
       throw error
     }
   }
@@ -209,9 +214,10 @@ public actor SyncEngineActor {
   public func syncAssets(
     _ assets: [PHAsset], config: SyncConfig, database: SyncDatabase, apiClient: SynologyAPIClient
   ) async throws {
-    for asset in assets {
-      try await waitUntilReady()
-      try await syncSingleAsset(asset, config: config, database: database, apiClient: apiClient)
+    let limit = config.parallelTransfers
+    try await BoundedTransferQueue.run(count: assets.count, limit: limit) { index in
+      try await self.syncSingleAsset(
+        assets[index], config: config, database: database, apiClient: apiClient)
     }
   }
 
@@ -219,6 +225,10 @@ public actor SyncEngineActor {
     _ asset: PHAsset, config: SyncConfig, database: SyncDatabase, apiClient: SynologyAPIClient
   ) async throws {
     try await waitUntilReady()
+    let transferID = UUID()
+    await MainActor.run {
+      SyncState.shared.beginTransfer(id: transferID, filename: asset.localIdentifier)
+    }
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(
       "syno_media_\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -238,26 +248,31 @@ public actor SyncEngineActor {
         }
         let file = directory.appendingPathComponent(source.filename)
         let originalName = source.resource.originalFilename
+        let revision = UUID()
         defer { try? FileManager.default.removeItem(at: file) }
         await MainActor.run {
-          SyncState.shared.setCurrentFile(
-            name: originalName, stage: .downloadingFromICloud)
+          SyncState.shared.setTransferFile(
+            id: transferID, revision: revision, name: originalName, stage: .downloadingFromICloud)
         }
-        try await extractResourceToFile(resource: source.resource, destinationURL: file)
+        try await extractResourceToFile(
+          resource: source.resource, destinationURL: file, transferID: transferID,
+          revision: revision)
         totalBytes +=
           (try FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)?
           .int64Value ?? 0
         try await waitUntilReady()
         await MainActor.run {
-          SyncState.shared.setCurrentFile(
-            name: originalName, stage: .uploadingToSynology)
+          SyncState.shared.setTransferFile(
+            id: transferID, revision: revision, name: originalName, stage: .uploadingToSynology)
         }
-        let id = try await recovering {
+        let id = try await recovering(transferID: transferID) {
           try await apiClient.uploadItem(
             fileURL: file, filename: source.filename, creationDate: plan.creationDate,
             targetSpace: plan.target, allowInsecureSSL: config.allowInsecureSSL
           ) { progress in
-            Task { @MainActor in SyncState.shared.updateSynologyProgress(progress) }
+            Task { @MainActor in
+              SyncState.shared.updateTransfer(id: transferID, revision: revision, upload: progress)
+            }
           }
         }
         if index == 0 { primaryID = id }
@@ -272,27 +287,39 @@ public actor SyncEngineActor {
         synologyId: primaryID, sizeBytes: totalBytes)
       await MainActor.run { SyncState.shared.markFileSuccess(historyItem: history) }
     } catch {
+      await MainActor.run { SyncState.shared.endTransfer(id: transferID) }
       await recordError(
         appleId: asset.localIdentifier, filename: displayName,
         error: TransferRetry.message(for: error),
         database: database)
       if Self.mustStopQueue(after: error) { throw error }
+      return
     }
+    await MainActor.run { SyncState.shared.endTransfer(id: transferID) }
   }
 
-  private func extractResourceToFile(resource: PHAssetResource, destinationURL: URL) async throws {
+  private func extractResourceToFile(
+    resource: PHAssetResource, destinationURL: URL, transferID: UUID? = nil, revision: UUID? = nil
+  ) async throws {
     try await waitUntilReady()
     try FileManager.default.createDirectory(
       at: destinationURL.deletingLastPathComponent(), withIntermediateDirectories: true,
       attributes: [.posixPermissions: 0o700])
-    try await recovering {
+    try await recovering(transferID: transferID) {
       try? FileManager.default.removeItem(at: destinationURL)
       try await withCheckedThrowingContinuation {
         (continuation: CheckedContinuation<Void, Error>) in
         let options = PHAssetResourceRequestOptions()
         options.isNetworkAccessAllowed = true
         options.progressHandler = { progress in
-          Task { @MainActor in SyncState.shared.updateICloudProgress(progress) }
+          Task { @MainActor in
+            if let transferID, let revision {
+              SyncState.shared.updateTransfer(
+                id: transferID, revision: revision, download: progress)
+            } else {
+              SyncState.shared.updateICloudProgress(progress)
+            }
+          }
         }
         PHAssetResourceManager.default().writeData(
           for: resource, toFile: destinationURL, options: options

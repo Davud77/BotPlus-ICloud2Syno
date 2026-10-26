@@ -55,6 +55,52 @@ final class NetworkTests: XCTestCase {
       })
   }
 
+  func testConcurrentOperationsShareOneLogin() async throws {
+    let lock = NSLock()
+    var logins = 0
+    let api = client { request in
+      lock.lock()
+      defer { lock.unlock() }
+      if request.url!.path.hasSuffix("auth.cgi") {
+        logins += 1
+        Thread.sleep(forTimeInterval: 0.02)
+        return (200, #"{"success":true,"data":{"sid":"shared-sid"}}"#)
+      }
+      return (200, #"{"success":true,"data":{"list":[]}}"#)
+    }
+    try await BoundedTransferQueue.run(count: 16, limit: 8) { _ in
+      try await api.validateAccess(targetSpace: .personal, allowInsecureSSL: false)
+    }
+    XCTAssertEqual(logins, 1)
+  }
+
+  func testConcurrentExpiredSIDRefreshesOnceAndLateFailuresReuseNewSID() async throws {
+    let lock = NSLock()
+    var logins = 0
+    let api = client { request in
+      lock.lock()
+      defer { lock.unlock() }
+      if request.url!.path.hasSuffix("auth.cgi") {
+        logins += 1
+        Thread.sleep(forTimeInterval: 0.02)
+        return (
+          200,
+          logins == 1
+            ? #"{"success":true,"data":{"sid":"expired"}}"#
+            : #"{"success":true,"data":{"sid":"fresh"}}"#
+        )
+      }
+      if request.value(forHTTPHeaderField: "Cookie") == "id=expired" {
+        return (200, #"{"success":false,"error":{"code":119}}"#)
+      }
+      return (200, #"{"success":true,"data":{"list":[]}}"#)
+    }
+    try await BoundedTransferQueue.run(count: 16, limit: 8) { _ in
+      try await api.validateAccess(targetSpace: .personal, allowInsecureSSL: false)
+    }
+    XCTAssertEqual(logins, 2)
+  }
+
   func testConnectionUsesPOSTAndDoesNotPutSecretsInURL() async throws {
     var paths: [String] = []
     let api = client { request in

@@ -12,6 +12,7 @@
 		444444444040AA352A376087 /* SynologyPhotoSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333334040AA352A376087 /* SynologyPhotoSyncApp.swift */; };
 		4444444409F835D0F9A07BF3 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333309F835D0F9A07BF3 /* UpdateManager.swift */; };
 		44444444860E79EA4EB4C16F /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333860E79EA4EB4C16F /* AppLogger.swift */; };
+		44444444E2D8A437042F6C38 /* BoundedTransferQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333E2D8A437042F6C38 /* BoundedTransferQueue.swift */; };
 		4444444440035D6CE3070981 /* FilenameSanitizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333340035D6CE3070981 /* FilenameSanitizer.swift */; };
 		4444444460F3CA63DCA55407 /* PhotoLibraryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */; };
 		4444444466365A15462CD825 /* PhotoTransferPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3333333366365A15462CD825 /* PhotoTransferPlan.swift */; };
@@ -32,7 +33,7 @@
 		444444449F423CBF025CA8BF /* MenuBarPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333333339F423CBF025CA8BF /* MenuBarPopupView.swift */; };
 		44444444B5C53546B4ADF689 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333B5C53546B4ADF689 /* SettingsView.swift */; };
 		44444444FDF16AD8B83CD913 /* SettingsWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33333333FDF16AD8B83CD913 /* SettingsWindowManager.swift */; };
-		55555555555555550000007F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33333333333333330000007F /* Assets.xcassets */; };
+		555555555555555500000080 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 333333333333333300000080 /* Assets.xcassets */; };
 		777777777777777700000003 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 777777777777777700000002 /* Sparkle */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		333333334040AA352A376087 /* SynologyPhotoSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SynologyPhotoSyncApp.swift"; sourceTree = "<group>"; };
 		3333333309F835D0F9A07BF3 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpdateManager.swift"; sourceTree = "<group>"; };
 		33333333860E79EA4EB4C16F /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLogger.swift"; sourceTree = "<group>"; };
+		33333333E2D8A437042F6C38 /* BoundedTransferQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BoundedTransferQueue.swift"; sourceTree = "<group>"; };
 		3333333340035D6CE3070981 /* FilenameSanitizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilenameSanitizer.swift"; sourceTree = "<group>"; };
 		3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoLibraryMonitor.swift"; sourceTree = "<group>"; };
 		3333333366365A15462CD825 /* PhotoTransferPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoTransferPlan.swift"; sourceTree = "<group>"; };
@@ -63,9 +65,9 @@
 		333333339F423CBF025CA8BF /* MenuBarPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarPopupView.swift"; sourceTree = "<group>"; };
 		33333333B5C53546B4ADF689 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
 		33333333FDF16AD8B83CD913 /* SettingsWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsWindowManager.swift"; sourceTree = "<group>"; };
-		33333333333333330000007D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
-		33333333333333330000007E /* SynologyPhotoSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SynologyPhotoSync.entitlements"; sourceTree = "<group>"; };
-		33333333333333330000007F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		33333333333333330000007E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		33333333333333330000007F /* SynologyPhotoSync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SynologyPhotoSync.entitlements"; sourceTree = "<group>"; };
+		333333333333333300000080 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				33333333860E79EA4EB4C16F /* AppLogger.swift */,
+				33333333E2D8A437042F6C38 /* BoundedTransferQueue.swift */,
 				3333333340035D6CE3070981 /* FilenameSanitizer.swift */,
 				3333333360F3CA63DCA55407 /* PhotoLibraryMonitor.swift */,
 				3333333366365A15462CD825 /* PhotoTransferPlan.swift */,
@@ -188,9 +191,9 @@
 		222222222222222200000009 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				33333333333333330000007D /* Info.plist */,
-				33333333333333330000007E /* SynologyPhotoSync.entitlements */,
-				33333333333333330000007F /* Assets.xcassets */,
+				33333333333333330000007E /* Info.plist */,
+				33333333333333330000007F /* SynologyPhotoSync.entitlements */,
+				333333333333333300000080 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -250,7 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55555555555555550000007F /* Assets.xcassets in Resources */,
+				555555555555555500000080 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +269,7 @@
 				444444444040AA352A376087 /* SynologyPhotoSyncApp.swift in Sources */,
 				4444444409F835D0F9A07BF3 /* UpdateManager.swift in Sources */,
 				44444444860E79EA4EB4C16F /* AppLogger.swift in Sources */,
+				44444444E2D8A437042F6C38 /* BoundedTransferQueue.swift in Sources */,
 				4444444440035D6CE3070981 /* FilenameSanitizer.swift in Sources */,
 				4444444460F3CA63DCA55407 /* PhotoLibraryMonitor.swift in Sources */,
 				4444444466365A15462CD825 /* PhotoTransferPlan.swift in Sources */,
@@ -423,7 +427,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -431,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -451,7 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -459,7 +463,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.synologyphotosync.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

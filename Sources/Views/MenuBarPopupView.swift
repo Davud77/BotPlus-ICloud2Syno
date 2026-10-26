@@ -195,7 +195,28 @@ public struct MenuBarPopupView: View {
         }
       }
 
-      if !syncState.currentFileName.isEmpty {
+      if !syncState.activeTransfers.isEmpty {
+        Text("Активных файлов: \(syncState.activeTransfers.count)")
+          .font(.caption).foregroundStyle(.secondary)
+        ForEach(syncState.activeTransfers) { transfer in
+          VStack(alignment: .leading, spacing: 4) {
+            Text(transfer.filename).font(.system(size: 12, weight: .semibold))
+              .lineLimit(1).truncationMode(.middle)
+            let stage =
+              syncState.isPaused
+              ? SyncStage.paused
+              : (transfer.waitingForNetwork ? .waitingForNetwork : transfer.stage)
+            Text(stage.localizedDescription).font(.caption).foregroundStyle(.secondary)
+            StageProgressBar(
+              title: "iCloud", progress: transfer.downloadProgress, detailText: "", tintColor: .cyan
+            )
+            StageProgressBar(
+              title: "NAS", progress: transfer.uploadProgress,
+              detailText: transfer.bytesText, tintColor: .blue)
+          }
+          .padding(.vertical, 4)
+        }
+      } else if !syncState.currentFileName.isEmpty {
         VStack(alignment: .leading, spacing: 3) {
           Text(syncState.currentFileName)
             .font(.system(size: 12, weight: .semibold))
